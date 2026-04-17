@@ -91,19 +91,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Writer CTA Banner */}
+      {/* Writer CTA Banner (Short About Section) */}
       <section className="relative overflow-hidden rounded-[28px] bg-ink p-10 text-center text-white shadow-card sm:p-16">
         <div className="absolute -left-10 -top-24 h-64 w-64 rounded-full bg-coral/30 blur-[100px]"></div>
         <div className="absolute -bottom-24 -right-10 h-64 w-64 rounded-full bg-teal/30 blur-[100px]"></div>
         
-        <div className="relative z-10 mx-auto max-w-2xl">
-          <h2 className="font-display text-3xl font-bold sm:text-4xl">Share Your Perspective</h2>
-          <p className="mx-auto mt-4 max-w-lg text-lg text-white/70">
-            Join a global community of innovators and thought leaders. Publish your insights on topics that matter.
+        <div className="relative z-10 mx-auto max-w-3xl">
+          <span className="mb-4 inline-block rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-sm font-semibold tracking-wider text-white">Empowering Global Perspectives</span>
+          <h2 className="font-display text-3xl font-bold sm:text-4xl mt-3 mb-6">Join a community of thinkers shaping the future.</h2>
+          <p className="mx-auto mb-10 max-w-2xl text-lg text-white/80 leading-relaxed font-light">
+            Magnivel International Media is a modern platform for thought-provoking ideas, innovative insights, and diverse perspectives from voices around the world. We bring together thinkers and creators to share knowledge that inspires.
           </p>
-          <div className="mt-8 flex justify-center">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
             <Link to="/register">
-              <Button variant="primary" className="bg-coral text-white hover:bg-coral/90 px-8 py-4 text-base shadow-lg">Start Writing Today</Button>
+               <Button variant="primary" className="bg-coral text-white hover:bg-coral/90 border-0 px-8 py-4 text-base shadow-lg shadow-coral/20">Become a Contributor</Button>
+            </Link>
+            <Link to="/explore">
+               <Button variant="ghost" className="border border-white/20 px-8 py-4 text-base hover:bg-white/10">Explore Ideas</Button>
             </Link>
           </div>
         </div>

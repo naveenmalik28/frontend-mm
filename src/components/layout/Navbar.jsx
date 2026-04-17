@@ -25,9 +25,9 @@ export default function Navbar() {
     <header className="sticky top-0 z-20 border-b border-white/60 bg-sand/90 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <Link to="/" className="flex items-center gap-3">
-          <span className="rounded-full bg-coral px-3 py-2 font-display text-lg font-semibold text-white">MM</span>
+          <span className="rounded-full bg-coral px-3 py-2 font-display text-lg font-semibold text-white">MIM</span>
           <div>
-            <div className="text-xs uppercase tracking-[0.28em] text-teal">Magnivel Media</div>
+            <div className="text-xs uppercase tracking-[0.28em] text-teal">Magnivel International Media</div>
             <div className="font-display text-xl">Stories with signal</div>
           </div>
         </Link>

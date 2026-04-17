@@ -5,8 +5,8 @@ export const fetchPlans = async () => {
   return data
 }
 
-export const createCheckout = async (planId) => {
-  const { data } = await api.post("/subscriptions/checkout/", { plan_id: planId })
+export const createCheckout = async ({ planId, currency }) => {
+  const { data } = await api.post("/subscriptions/checkout/", { plan_id: planId, currency })
   return data
 }
 
@@ -19,4 +19,3 @@ export const fetchMySubscription = async () => {
   const { data } = await api.get("/subscriptions/my/")
   return data
 }
-

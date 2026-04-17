@@ -8,7 +8,7 @@ export default function Footer() {
           
           {/* Column 1: Brand */}
           <div className="space-y-4">
-            <div className="font-display text-2xl font-bold tracking-tight text-ink">Magnivel Media</div>
+            <div className="font-display text-2xl font-bold tracking-tight text-ink">Magnivel International Media</div>
             <p className="max-w-xs text-sm text-ink/70 leading-relaxed">
               A global platform for thought-sharing and innovation. Read deep insights, publish your own perspective, and shape the future.
             </p>
@@ -34,8 +34,8 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-ink/80">
               <li><Link to="/explore" className="hover:text-coral transition-colors">Latest Stories</Link></li>
               <li><Link to="/plans" className="hover:text-coral transition-colors">Writer Plans</Link></li>
-              <li><a href="#" className="hover:text-coral transition-colors">About Us</a></li>
-              <li><a href="#" className="hover:text-coral transition-colors">Contact & Support</a></li>
+              <li><Link to="/about" className="hover:text-coral transition-colors">About Us</Link></li>
+              <li><Link to="/contact" className="hover:text-coral transition-colors">Contact & Support</Link></li>
             </ul>
           </div>
 
@@ -60,10 +60,10 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 border-t border-ink/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-ink/50">
-          <p>© {new Date().getFullYear()} Magnivel Media. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Magnivel International Media. All rights reserved.</p>
           <div className="flex gap-4">
-            <a href="#" className="hover:text-ink transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-ink transition-colors">Terms of Service</a>
+            <Link to="/privacy" className="hover:text-ink transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-ink transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>

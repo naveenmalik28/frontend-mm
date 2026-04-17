@@ -35,6 +35,7 @@ export default function NewArticle() {
   const [saving, setSaving] = useState(false)
   const [creatingTag, setCreatingTag] = useState(false)
   const [error, setError] = useState("")
+  const [showImageURL, setShowImageURL] = useState(false)
 
   useEffect(() => {
     let mounted = true
@@ -128,6 +129,16 @@ export default function NewArticle() {
     }
   }
 
+  const toggleTag = (tagId) => {
+    setForm((prev) => {
+      const isSelected = prev.tag_ids.includes(tagId)
+      return {
+        ...prev,
+        tag_ids: isSelected ? prev.tag_ids.filter((id) => id !== tagId) : [...prev.tag_ids, tagId],
+      }
+    })
+  }
+
   return (
     <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
       <Sidebar />
@@ -143,52 +154,144 @@ export default function NewArticle() {
           </div>
         )}
 
-        <div className="grid gap-6 xl:grid-cols-[0.7fr_1.3fr]">
-          <div className="glass-panel space-y-4 p-6">
-            <input className="input" placeholder="Title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
-            <textarea className="textarea" placeholder="Excerpt" value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })} />
-            <div className="relative">
-              <input
-                type="file"
-                accept="image/*"
-                className="w-full rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm text-ink outline-none file:mr-4 file:cursor-pointer file:rounded-full file:border-0 file:bg-coral/10 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-coral hover:file:bg-coral/20"
-                onChange={async (e) => {
-                  if (e.target.files?.[0]) {
-                    try {
-                      const { url } = await uploadImage(e.target.files[0])
-                      setForm((prev) => ({ ...prev, cover_image: url }))
-                    } catch {
-                      setError("Failed to upload image.")
-                    }
-                  }
-                }}
-              />
-              <div className="mt-2 flex items-center gap-2">
-                <span className="text-[10px] uppercase tracking-wide text-ink/40">Or paste URL</span>
-                <input
-                  className="w-full rounded border-b border-ink/10 bg-transparent py-1 text-xs text-ink placeholder-ink/30 outline-none focus:border-coral"
-                  placeholder="https://..."
-                  value={form.cover_image}
-                  onChange={(e) => setForm({ ...form, cover_image: e.target.value })}
-                />
-              </div>
-              {form.cover_image && (
-                <img
-                  src={form.cover_image}
-                  alt="Preview"
-                  className="mt-3 max-h-40 w-full rounded-xl object-cover shadow-sm"
-                  onError={(e) => (e.target.style.display = "none")}
-                />
-              )}
+        {/* Change layout: left = editor, right = sticky configuration */}
+        <div className="grid gap-6 xl:grid-cols-[1.3fr_0.7fr] xl:items-start">
+          
+          {/* Main content area */}
+          <div className="order-2 xl:order-1 glass-panel p-6 space-y-6">
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-ink">Title</label>
+              <input className="input" placeholder="Give your article a clear, catchy title..." value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
             </div>
-            <select className="input" value={form.category_id} onChange={(e) => setForm({ ...form, category_id: e.target.value ? Number(e.target.value) : "" })}>
-              <option value="">Select category</option>
-              {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
-            </select>
-            <div className="space-y-2">
+            
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-ink">Excerpt</label>
+              <textarea className="textarea h-24" placeholder="Briefly describe what this article is about..." value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })} />
+            </div>
+            
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-ink">Content</label>
+              <ArticleEditor value={form.content} onChange={(content) => setForm({ ...form, content })} />
+            </div>
+          </div>
+
+          {/* Configuration sidebar */}
+          <div className="order-1 xl:order-2 glass-panel space-y-6 p-6 xl:sticky xl:top-6">
+            
+            {/* Cover Image */}
+            <div>
+              <label className="mb-3 flex items-center justify-between text-sm font-semibold text-ink">
+                <span>Cover Image</span>
+                <button 
+                  type="button" 
+                  onClick={() => setShowImageURL(!showImageURL)}
+                  className="text-xs text-coral hover:underline"
+                >
+                  {showImageURL ? "Upload file instead" : "Use URL instead"}
+                </button>
+              </label>
+              
+              <div className="relative">
+                {showImageURL ? (
+                  <input
+                    className="input text-sm"
+                    placeholder="https://example.com/image.jpg"
+                    value={form.cover_image}
+                    onChange={(e) => setForm({ ...form, cover_image: e.target.value })}
+                  />
+                ) : (
+                  <div className="relative flex items-center justify-center rounded-2xl border-2 border-dashed border-ink/20 bg-ink/5 hover:bg-ink/10 transition-colors p-6 cursor-pointer overflow-hidden">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="absolute inset-0 z-10 w-full h-full opacity-0 cursor-pointer"
+                      onChange={async (e) => {
+                        if (e.target.files?.[0]) {
+                          try {
+                            const { url } = await uploadImage(e.target.files[0])
+                            setForm((prev) => ({ ...prev, cover_image: url }))
+                          } catch {
+                            setError("Failed to upload image.")
+                          }
+                        }
+                      }}
+                    />
+                    <div className="text-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto h-8 w-8 text-ink/40 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <span className="text-sm font-medium text-ink/60">Click or drag image to upload</span>
+                    </div>
+                  </div>
+                )}
+
+                {form.cover_image && (
+                  <div className="mt-4 relative group rounded-xl overflow-hidden shadow-sm">
+                    <img
+                      src={form.cover_image}
+                      alt="Preview"
+                      className="max-h-48 w-full object-cover"
+                      onError={(e) => (e.target.style.display = "none")}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setForm(prev => ({...prev, cover_image: ""}))}
+                      className="absolute top-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-black/50 text-white opacity-0 transition-opacity group-hover:opacity-100 hover:bg-black/70"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <hr className="border-ink/10" />
+
+            {/* Category */}
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-ink">Category</label>
+              <select className="input" value={form.category_id} onChange={(e) => setForm({ ...form, category_id: e.target.value ? Number(e.target.value) : "" })}>
+                <option value="">Select category...</option>
+                {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
+              </select>
+            </div>
+
+            <hr className="border-ink/10" />
+
+            {/* Tags */}
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-ink">Tags</label>
+              
+              <div className="flex flex-wrap gap-2 mb-4">
+                {tags.map((tag) => {
+                  const isSelected = form.tag_ids.includes(tag.id)
+                  return (
+                    <button
+                      key={tag.id}
+                      type="button"
+                      onClick={() => toggleTag(tag.id)}
+                      className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+                        isSelected 
+                          ? "bg-coral text-white shadow-sm" 
+                          : "bg-ink/5 text-ink/70 hover:bg-ink/10 hover:text-ink"
+                      }`}
+                    >
+                      {tag.name}
+                      {isSelected && (
+                        <svg xmlns="http://www.w3.org/2000/svg" className="ml-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      )}
+                    </button>
+                  )
+                })}
+              </div>
+
               <div className="flex gap-2">
                 <input
-                  className="input"
+                  className="input text-sm py-2"
                   placeholder="Create a new tag"
                   value={newTagName}
                   onChange={(e) => setNewTagName(e.target.value)}
@@ -199,26 +302,25 @@ export default function NewArticle() {
                     }
                   }}
                 />
-                <Button onClick={handleCreateTag} type="button" disabled={creatingTag}>
-                  {creatingTag ? "Adding..." : "Add tag"}
+                <Button onClick={handleCreateTag} type="button" disabled={creatingTag || !newTagName.trim()} className="py-2 px-4 whitespace-nowrap">
+                  {creatingTag ? "Adding..." : "Add"}
                 </Button>
               </div>
-              <p className="text-xs text-ink/50">Select existing tags below or create one instantly for this article.</p>
             </div>
-            <select
-              multiple
-              className="input min-h-[140px]"
-              value={form.tag_ids}
-              onChange={(e) => setForm({ ...form, tag_ids: Array.from(e.target.selectedOptions, (option) => Number(option.value)) })}
-            >
-              {tags.map((tag) => <option key={tag.id} value={tag.id}>{tag.name}</option>)}
-            </select>
-            <div className="flex gap-3">
-              <Button onClick={() => saveArticle(false)} type="button" disabled={saving}>{saving ? "Saving..." : "Save draft"}</Button>
-              <Button onClick={() => saveArticle(true)} type="button" variant="secondary" disabled={saving}>{saving ? "Saving..." : "Publish"}</Button>
+
+            <hr className="border-ink/10" />
+
+            {/* Actions */}
+            <div className="flex flex-col gap-3 pt-2">
+              <Button onClick={() => saveArticle(true)} type="button" variant="secondary" disabled={saving}>
+                {saving ? "Processing..." : "Publish Article"}
+              </Button>
+              <Button onClick={() => saveArticle(false)} type="button" disabled={saving}>
+                {saving ? "Saving..." : "Save Draft"}
+              </Button>
             </div>
+            
           </div>
-          <ArticleEditor value={form.content} onChange={(content) => setForm({ ...form, content })} />
         </div>
       </div>
     </div>

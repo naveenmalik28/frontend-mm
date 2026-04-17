@@ -18,6 +18,10 @@ import Settings from "./pages/profile/Settings.jsx"
 import Checkout from "./pages/subscription/Checkout.jsx"
 import Plans from "./pages/subscription/Plans.jsx"
 import Success from "./pages/subscription/Success.jsx"
+import About from "./pages/info/About.jsx"
+import Contact from "./pages/info/Contact.jsx"
+import PrivacyPolicy from "./pages/info/PrivacyPolicy.jsx"
+import TermsOfService from "./pages/info/TermsOfService.jsx"
 
 export default function App() {
   return (
@@ -33,6 +37,10 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/plans" element={<Plans />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
 
             <Route element={<PrivateRoutes />}>
               <Route path="/dashboard" element={<Dashboard />} />
