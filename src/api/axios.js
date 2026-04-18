@@ -2,7 +2,8 @@ import axios from "axios"
 
 import { useAuthStore } from "../store/authStore.js"
 
-const baseURL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000"
+const productionApiUrl = "https://api.magnivel.com"
+const baseURL = import.meta.env.VITE_API_BASE_URL || (import.meta.env.DEV ? "http://localhost:8000" : productionApiUrl)
 
 const api = axios.create({
   baseURL: `${baseURL}/api`,
@@ -43,4 +44,3 @@ api.interceptors.response.use(
 )
 
 export default api
-
