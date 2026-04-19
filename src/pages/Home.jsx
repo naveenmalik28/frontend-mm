@@ -314,7 +314,7 @@ export default function Home() {
               </Button>
             </Link>
             <Link to="/explore">
-              <Button variant="ghost" className="border border-white/20 px-8 py-4 text-base text-white hover:bg-white/10">
+              <Button variant="ghost" className="border border-white/20 px-8 py-4 text-base">
                 Browse Articles First
               </Button>
             </Link>
