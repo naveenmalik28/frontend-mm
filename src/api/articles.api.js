@@ -1,6 +1,47 @@
 import api from "./axios.js"
 
 const unwrapList = (response) => response.data?.results ?? response.data
+const isFile = (value) => typeof File !== "undefined" && value instanceof File
+const isPreviewUrl = (value) => typeof value === "string" && value.startsWith("blob:")
+
+const toArticleRequestBody = (payload = {}) => {
+  if (!isFile(payload.cover_image_file)) {
+    const jsonPayload = { ...payload }
+    if (isPreviewUrl(jsonPayload.cover_image)) {
+      delete jsonPayload.cover_image
+    }
+    if (!jsonPayload.cover_image_file) {
+      delete jsonPayload.cover_image_file
+    }
+    return jsonPayload
+  }
+
+  const formData = new FormData()
+
+  Object.entries(payload).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      value.forEach((item) => formData.append(key, item))
+      return
+    }
+
+    if (key === "cover_image" && isPreviewUrl(value)) {
+      return
+    }
+
+    if (value === undefined || value === null) {
+      return
+    }
+
+    formData.append(key, value)
+  })
+
+  return formData
+}
+
+const requestConfig = (body) =>
+  body instanceof FormData
+    ? { headers: { "Content-Type": "multipart/form-data" } }
+    : undefined
 
 export const fetchArticles = async (params = {}) => {
   const { data } = await api.get("/articles/", { params })
@@ -18,12 +59,14 @@ export const fetchMyArticles = async (params = {}) => {
 }
 
 export const createArticle = async (payload) => {
-  const { data } = await api.post("/articles/", payload)
+  const body = toArticleRequestBody(payload)
+  const { data } = await api.post("/articles/", body, requestConfig(body))
   return data
 }
 
 export const updateArticle = async (id, payload) => {
-  const { data } = await api.patch(`/articles/${id}/`, payload)
+  const body = toArticleRequestBody(payload)
+  const { data } = await api.patch(`/articles/${id}/`, body, requestConfig(body))
   return data
 }
 
@@ -47,14 +90,5 @@ export const fetchTags = async () => {
 
 export const createTag = async (payload) => {
   const { data } = await api.post("/tags/", payload)
-  return data
-}
-
-export const uploadImage = async (file) => {
-  const formData = new FormData()
-  formData.append("image", file)
-  const { data } = await api.post("/articles/upload-image/", formData, {
-    headers: { "Content-Type": "multipart/form-data" },
-  })
   return data
 }

@@ -9,7 +9,6 @@ import {
   fetchTags,
   publishArticle,
   updateArticle,
-  uploadImage,
 } from "../../api/articles.api.js"
 import ArticleEditor from "../../components/articles/ArticleEditor.jsx"
 import Sidebar from "../../components/layout/Sidebar.jsx"
@@ -22,6 +21,7 @@ const EMPTY_FORM = {
   category_id: "",
   tag_ids: [],
   cover_image: "",
+  cover_image_file: null,
   status: "draft",
 }
 
@@ -66,6 +66,7 @@ export default function NewArticle() {
             category_id: article.category?.id ?? "",
             tag_ids: (article.tags || []).map((tag) => tag.id),
             cover_image: article.cover_image || "",
+            cover_image_file: null,
             status: article.status || "draft",
           })
         })
@@ -78,6 +79,14 @@ export default function NewArticle() {
       mounted = false
     }
   }, [id])
+
+  useEffect(() => {
+    return () => {
+      if (form.cover_image?.startsWith("blob:")) {
+        URL.revokeObjectURL(form.cover_image)
+      }
+    }
+  }, [form.cover_image])
 
   const saveArticle = async (publish = false) => {
     setSaving(true)
@@ -197,7 +206,7 @@ export default function NewArticle() {
                     className="input text-sm"
                     placeholder="https://example.com/image.jpg"
                     value={form.cover_image}
-                    onChange={(e) => setForm({ ...form, cover_image: e.target.value })}
+                    onChange={(e) => setForm({ ...form, cover_image: e.target.value, cover_image_file: null })}
                   />
                 ) : (
                   <div className="relative flex items-center justify-center rounded-2xl border-2 border-dashed border-ink/20 bg-ink/5 hover:bg-ink/10 transition-colors p-6 cursor-pointer overflow-hidden">
@@ -205,14 +214,15 @@ export default function NewArticle() {
                       type="file"
                       accept="image/*"
                       className="absolute inset-0 z-10 w-full h-full opacity-0 cursor-pointer"
-                      onChange={async (e) => {
+                      onChange={(e) => {
                         if (e.target.files?.[0]) {
-                          try {
-                            const { url } = await uploadImage(e.target.files[0])
-                            setForm((prev) => ({ ...prev, cover_image: url }))
-                          } catch {
-                            setError("Failed to upload image.")
-                          }
+                          const previewUrl = URL.createObjectURL(e.target.files[0])
+                          setError("")
+                          setForm((prev) => ({
+                            ...prev,
+                            cover_image: previewUrl,
+                            cover_image_file: e.target.files[0],
+                          }))
                         }
                       }}
                     />
@@ -221,6 +231,7 @@ export default function NewArticle() {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                       <span className="text-sm font-medium text-ink/60">Click or drag image to upload</span>
+                      <p className="mt-2 text-xs text-ink/45">The backend uploads it to Cloudinary when you save the article.</p>
                     </div>
                   </div>
                 )}
@@ -235,7 +246,7 @@ export default function NewArticle() {
                     />
                     <button
                       type="button"
-                      onClick={() => setForm(prev => ({...prev, cover_image: ""}))}
+                      onClick={() => setForm((prev) => ({ ...prev, cover_image: "", cover_image_file: null }))}
                       className="absolute top-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-black/50 text-white opacity-0 transition-opacity group-hover:opacity-100 hover:bg-black/70"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
