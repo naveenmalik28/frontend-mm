@@ -1,25 +1,42 @@
 import { useCallback, useMemo } from "react"
-import { Helmet } from "react-helmet-async"
 import { Link, useNavigate } from "react-router-dom"
 
-import { useArticles } from "../hooks/useArticles.js"
 import ArticleList from "../components/articles/ArticleList.jsx"
 import CategoryFilter from "../components/articles/CategoryFilter.jsx"
-import Spinner from "../components/ui/Spinner.jsx"
+import SeoHead from "../components/seo/SeoHead.jsx"
 import Button from "../components/ui/Button.jsx"
+import Spinner from "../components/ui/Spinner.jsx"
+import {
+  BRAND_COPY,
+  BUSINESS_NAME,
+  BUSINESS_SERVICES_URL,
+  CATEGORY_LABELS,
+  SITE_NAME,
+  SITE_TAGLINE,
+} from "../config/site.js"
+import { useArticles } from "../hooks/useArticles.js"
 
 export default function Home() {
   const navigate = useNavigate()
-  const { articles, categories, loading } = useArticles({ ordering: "-published_at" })
+  const { articles, categories, loading } = useArticles({ ordering: "-published_at", page_size: 18 })
 
   const { featuredArticle, trendingArticles, feedArticles } = useMemo(() => {
     const nextFeaturedArticle = articles.find((article) => article.is_featured) || articles[0]
     const remainingArticles = articles.filter((article) => article.id !== nextFeaturedArticle?.id)
+    const nextTrendingArticles = [...remainingArticles]
+      .sort(
+        (left, right) =>
+          (right.view_count || 0) - (left.view_count || 0) ||
+          (right.published_at || "").localeCompare(left.published_at || ""),
+      )
+      .slice(0, 4)
+    const trendingIds = new Set(nextTrendingArticles.map((article) => article.id))
+    const nextFeedArticles = remainingArticles.filter((article) => !trendingIds.has(article.id)).slice(0, 9)
 
     return {
       featuredArticle: nextFeaturedArticle,
-      trendingArticles: remainingArticles.slice(0, 3),
-      feedArticles: remainingArticles.slice(3, 9),
+      trendingArticles: nextTrendingArticles,
+      feedArticles: nextFeedArticles,
     }
   }, [articles])
 
@@ -37,15 +54,20 @@ export default function Home() {
 
   return (
     <div className="space-y-16">
-      <Helmet>
-        <title>Magnivel Media | Ideas That Shape the Future</title>
-        <meta name="description" content="Discover profound insights on technology, business, and society from leading thinkers around the globe." />
-        <meta property="og:title" content="Magnivel Media" />
-        <meta property="og:description" content="Discover profound insights on technology, business, and society from leading thinkers around the globe." />
-      </Helmet>
+      <SeoHead
+        title="AI, Technology, Science, and Business Insights"
+        description="Magnivel Media publishes search-first analysis across AI, technology, software development, cybersecurity, data science, health, science, education, society, and business."
+        path="/"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: SITE_NAME,
+          url: "https://magnivel.com/",
+          description: SITE_TAGLINE,
+        }}
+      />
 
-      {/* Hero / Featured Section */}
-      <section className="grid gap-6 lg:grid-cols-[1.5fr_1fr]">
+      <section className="grid gap-6 lg:grid-cols-[1.35fr_0.95fr]">
         <div className="glass-panel overflow-hidden">
           {loading || !featuredArticle ? (
             <div className="flex h-[500px] items-center justify-center p-8">
@@ -67,21 +89,30 @@ export default function Home() {
                 </div>
               )}
               <div className="relative z-10 text-white">
-                <div className="mb-4 inline-block rounded bg-coral px-3 py-1 text-xs font-bold uppercase tracking-wider">
+                <div className="mb-4 inline-block rounded-full bg-white/10 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.24em] text-white/90">
                   {featuredArticle.category?.name || "Featured Insight"}
                 </div>
-                <h1 className="font-display text-4xl leading-tight sm:text-5xl">
-                  <Link to={`/article/${featuredArticle.slug}`} className="hover:text-coral/90 transition-colors">
+                <div className="text-xs font-bold uppercase tracking-[0.28em] text-coral">{BRAND_COPY}</div>
+                <h1 className="mt-4 font-display text-4xl leading-tight sm:text-5xl">
+                  <Link to={`/article/${featuredArticle.slug}`} className="transition-colors hover:text-coral/90">
                     {featuredArticle.title}
                   </Link>
                 </h1>
-                <p className="mt-4 max-w-2xl text-lg text-white/80 line-clamp-2">
-                  {featuredArticle.excerpt}
-                </p>
+                <p className="mt-4 max-w-2xl text-lg text-white/80 line-clamp-3">{featuredArticle.excerpt}</p>
                 <div className="mt-6 flex items-center gap-4 text-sm font-medium text-white/70">
                   <span>{featuredArticle.author?.full_name || featuredArticle.author?.username || "Magnivel Media"}</span>
                   <span className="h-1 w-1 rounded-full bg-white/50"></span>
                   <span>{featuredArticle.read_time} min read</span>
+                </div>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <Link to={`/article/${featuredArticle.slug}`}>
+                    <Button className="border-0 bg-coral px-7">Read Feature</Button>
+                  </Link>
+                  <a href={BUSINESS_SERVICES_URL} target="_blank" rel="noreferrer">
+                    <Button variant="ghost" className="border border-white/20 bg-white/10 px-7 text-white hover:bg-white/15">
+                      Visit {BUSINESS_NAME}
+                    </Button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -90,67 +121,93 @@ export default function Home() {
 
         <div className="glass-panel flex flex-col p-8">
           <div className="mb-6">
-            <span className="eyebrow">Trending</span>
-            <p className="mt-2 font-display text-xl leading-tight">Must-read perspectives</p>
+            <span className="eyebrow">Trending Articles</span>
+            <p className="mt-2 font-display text-xl leading-tight">What readers are discovering now</p>
           </div>
           <div className="flex flex-1 flex-col gap-6">
             {loading ? (
-               <Spinner />
+              <Spinner />
             ) : (
               trendingArticles.map((article, index) => (
                 <div key={article.id} className="group flex items-start gap-4 border-b border-ink/5 pb-6 last:border-0 last:pb-0">
-                  <span className="font-display text-3xl font-bold text-ink/10 group-hover:text-coral/30 transition-colors">0{index + 1}</span>
+                  <span className="font-display text-3xl font-bold text-ink/10 transition-colors group-hover:text-coral/30">0{index + 1}</span>
                   <div>
-                    <h3 className="font-display text-lg font-semibold leading-snug text-ink group-hover:text-coral transition-colors">
+                    <h3 className="font-display text-lg font-semibold leading-snug text-ink transition-colors group-hover:text-coral">
                       <Link to={`/article/${article.slug}`}>{article.title}</Link>
                     </h3>
                     <div className="mt-2 text-xs font-semibold uppercase tracking-wider text-ink/40">
-                      {article.category?.name || "Insight"}
+                      {article.category?.name || "Insight"} / {article.view_count || 0} views
                     </div>
                   </div>
                 </div>
               ))
             )}
-            {!loading && trendingArticles.length === 0 && (
+            {!loading && trendingArticles.length === 0 ? (
               <p className="text-sm text-ink/50">No trending articles available yet.</p>
-            )}
+            ) : null}
           </div>
         </div>
       </section>
 
-      {/* Writer CTA Banner (Short About Section) */}
       <section className="relative overflow-hidden rounded-[28px] bg-ink p-10 text-center text-white shadow-card sm:p-16">
         <div className="absolute -left-10 -top-24 h-64 w-64 rounded-full bg-coral/30 blur-[100px]"></div>
         <div className="absolute -bottom-24 -right-10 h-64 w-64 rounded-full bg-teal/30 blur-[100px]"></div>
-        
+
         <div className="relative z-10 mx-auto max-w-3xl">
-          <span className="mb-4 inline-block rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-sm font-semibold tracking-wider text-white">Empowering Global Perspectives</span>
-          <h2 className="font-display text-3xl font-bold sm:text-4xl mt-3 mb-6">Join a community of thinkers shaping the future.</h2>
-          <p className="mx-auto mb-10 max-w-2xl text-lg text-white/80 leading-relaxed font-light">
-            Magnivel International Media is a modern platform for thought-provoking ideas, innovative insights, and diverse perspectives from voices around the world. We bring together thinkers and creators to share knowledge that inspires.
+          <span className="mb-4 inline-block rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-sm font-semibold tracking-wider text-white">
+            {BRAND_COPY}
+          </span>
+          <h2 className="mt-3 mb-6 font-display text-3xl font-bold sm:text-4xl">
+            Editorial discovery for readers, strategic credibility for the Magnivel brand.
+          </h2>
+          <p className="mx-auto mb-10 max-w-2xl text-lg font-light leading-relaxed text-white/80">
+            {SITE_NAME} is the publishing layer for discoverability: search-led stories that introduce readers to
+            ideas, expertise, and initiatives across the wider Magnivel ecosystem.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link to="/register">
-               <Button variant="primary" className="bg-coral text-white hover:bg-coral/90 border-0 px-8 py-4 text-base shadow-lg shadow-coral/20">Become a Contributor</Button>
+              <Button variant="primary" className="border-0 bg-coral px-8 py-4 text-base text-white shadow-lg shadow-coral/20 hover:bg-coral/90">
+                Become a Contributor
+              </Button>
             </Link>
-            <Link to="/explore">
-               <Button variant="ghost" className="border border-white/20 px-8 py-4 text-base hover:bg-white/10">Explore Ideas</Button>
-            </Link>
+            <a href={BUSINESS_SERVICES_URL} target="_blank" rel="noreferrer">
+              <Button variant="ghost" className="border border-white/20 px-8 py-4 text-base hover:bg-white/10">
+                Visit {BUSINESS_NAME}
+              </Button>
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Latest Feed */}
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {categories.slice(0, 8).map((category) => (
+          <Link
+            key={category.id}
+            to={`/category/${category.slug}`}
+            className="rounded-[24px] border border-ink/10 bg-white/80 p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-coral/25"
+          >
+            <div className="text-[11px] font-bold uppercase tracking-[0.24em] text-coral">
+              {CATEGORY_LABELS[category.slug] || category.name}
+            </div>
+            <div className="mt-3 font-display text-2xl text-ink">{category.name}</div>
+            <div className="mt-2 text-sm leading-relaxed text-ink/65">{category.description}</div>
+            <div className="mt-4 text-xs font-semibold uppercase tracking-[0.24em] text-ink/45">
+              {category.article_count || 0} published articles
+            </div>
+          </Link>
+        ))}
+      </section>
+
       <section className="space-y-6">
         <CategoryFilter categories={categories} activeCategory="" onChange={handleCategoryChange} />
         {loading ? <Spinner /> : <ArticleList articles={feedArticles} />}
-        {!loading && feedArticles.length > 0 && (
-          <div className="mt-8 text-center border-t border-ink/5 pt-8">
+        {!loading && feedArticles.length > 0 ? (
+          <div className="mt-8 border-t border-ink/5 pt-8 text-center">
             <Link to="/explore">
               <Button variant="ghost">View Complete Archive</Button>
             </Link>
           </div>
-        )}
+        ) : null}
       </section>
     </div>
   )

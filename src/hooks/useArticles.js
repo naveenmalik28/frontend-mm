@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 
 import { fetchArticles, fetchCategories } from "../api/articles.api.js"
+import { sortCategories } from "../utils/categoryOrder.js"
 import { serializeCacheKey } from "../utils/requestCache.js"
 
 export function useArticles(initialParams = {}) {
@@ -23,7 +24,7 @@ export function useArticles(initialParams = {}) {
         if (!mounted) return
         setArticles(articleData.results || articleData)
         setMeta(articleData)
-        setCategories(categoryData)
+        setCategories(sortCategories(categoryData))
       })
       .catch(() => {
         if (!mounted) return

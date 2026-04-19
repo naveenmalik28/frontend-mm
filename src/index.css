@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  font-family: "Segoe UI", sans-serif;
+  font-family: Georgia, "Times New Roman", serif;
   color: #132238;
   background:
     radial-gradient(circle at top left, rgba(239, 111, 94, 0.2), transparent 30%),
@@ -29,6 +29,7 @@ body,
 
 body {
   min-width: 320px;
+  background-attachment: fixed;
 }
 
 a {
@@ -48,6 +49,11 @@ a {
   @apply font-display text-3xl font-semibold text-ink sm:text-4xl;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 .input {
   @apply w-full rounded-2xl border border-ink/10 bg-white px-4 py-3 text-sm text-ink outline-none transition focus:border-coral focus:ring-2 focus:ring-coral/20;
 }
@@ -63,4 +69,3 @@ a {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
-

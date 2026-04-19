@@ -1,16 +1,19 @@
-import { useEffect, useState } from "react"
-import { Helmet } from "react-helmet-async"
+import { useEffect, useMemo, useState } from "react"
 import { useParams } from "react-router-dom"
 
-import { fetchArticleBySlug } from "../api/articles.api.js"
-import ArticleCard from "../components/articles/ArticleCard.jsx"
+import ArticleTemplate from "../components/articles/ArticleTemplate.jsx"
+import SeoHead from "../components/seo/SeoHead.jsx"
+import { BUSINESS_NAME, SITE_NAME, SITE_URL } from "../config/site.js"
+import { fetchArticleBySlug, incrementArticleView } from "../api/articles.api.js"
 import Spinner from "../components/ui/Spinner.jsx"
+import { parseArticleContent } from "../utils/articleContent.js"
 
 export default function ArticleDetail() {
   const { slug } = useParams()
   const [article, setArticle] = useState(null)
   const [resolvedSlug, setResolvedSlug] = useState(null)
   const loading = resolvedSlug !== slug
+  const { contentHtml, toc } = useMemo(() => parseArticleContent(article?.content), [article?.content])
 
   useEffect(() => {
     let mounted = true
@@ -37,52 +40,72 @@ export default function ArticleDetail() {
     }
   }, [slug])
 
+  useEffect(() => {
+    if (!article?.id) return
+
+    const viewKey = `article-view:${article.id}`
+    if (window.sessionStorage.getItem(viewKey)) return
+    window.sessionStorage.setItem(viewKey, "1")
+
+    incrementArticleView(article.id)
+      .catch(() => {
+        window.sessionStorage.removeItem(viewKey)
+      })
+  }, [article?.id])
+
   if (loading) return <Spinner label="Loading article" />
   if (!article) return <div className="glass-panel p-8">Article not found.</div>
 
+  const description = article.excerpt || `Read "${article.title}" on ${SITE_NAME}.`
+  const articleUrl = `/article/${article.slug}`
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description,
+    image: article.cover_image ? [article.cover_image] : undefined,
+    datePublished: article.published_at || undefined,
+    dateModified: article.updated_at || article.published_at || undefined,
+    author: {
+      "@type": "Person",
+      name: article.author?.full_name || article.author?.username || SITE_NAME,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    mainEntityOfPage: `${SITE_URL}${articleUrl}`,
+    articleSection: article.category?.name || undefined,
+    keywords: (article.tags || []).map((tag) => tag.name).join(", ") || undefined,
+    isPartOf: {
+      "@type": "WebSite",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    about: {
+      "@type": "Organization",
+      name: BUSINESS_NAME,
+    },
+  }
+
   return (
-    <article className="glass-panel mx-auto max-w-4xl p-8 sm:p-10">
-      <Helmet>
-        <title>{article.title} | Magnivel Media</title>
-        <meta name="description" content={article.excerpt || "Read this full article on Magnivel Media."} />
-        <meta property="og:title" content={article.title} />
-        <meta property="og:description" content={article.excerpt || "Read this full article on Magnivel Media."} />
-        {article.cover_image && <meta property="og:image" content={article.cover_image} />}
-        <meta property="og:type" content="article" />
-      </Helmet>
-      <div className="eyebrow">{article.category?.name || "Feature"}</div>
-      <h1 className="mt-4 font-display text-5xl leading-tight">{article.title}</h1>
-      <div className="mt-5 flex flex-wrap gap-4 text-sm text-ink/60">
-        <span>{article.author?.full_name || article.author?.username}</span>
-        <span>{article.read_time} min read</span>
-        <span>{article.published_at ? new Date(article.published_at).toLocaleDateString() : "Draft"}</span>
-      </div>
-      {article.cover_image && (
-        <div className="mt-8 overflow-hidden rounded-[28px] shadow-sm md:h-[480px]">
-          <img
-            src={article.cover_image}
-            alt={article.title}
-            className="h-full w-full object-cover"
-            decoding="async"
-            fetchPriority="high"
-            loading="eager"
-          />
-        </div>
-      )}
-      <div
-        className="prose prose-lg prose-headings:font-display prose-p:font-display prose-li:font-display prose-a:text-coral mx-auto mt-12 max-w-[65ch] text-ink/80 leading-relaxed"
-        dangerouslySetInnerHTML={{ __html: article.content }}
+    <>
+      <SeoHead
+        title={article.title}
+        description={description}
+        path={articleUrl}
+        image={article.cover_image}
+        type="article"
+        keywords={(article.tags || []).map((tag) => tag.name).join(", ")}
+        schema={schema}
       />
-      {article.related_articles && article.related_articles.length > 0 && (
-        <div className="mt-16 border-t border-ink/10 pt-16">
-          <h2 className="mb-8 text-center font-display text-3xl font-semibold">Read next</h2>
-          <div className="grid gap-6 md:grid-cols-3">
-            {article.related_articles.map((related) => (
-              <ArticleCard key={related.id} article={related} />
-            ))}
-          </div>
-        </div>
-      )}
-    </article>
+      <ArticleTemplate
+        article={article}
+        contentHtml={contentHtml}
+        toc={toc}
+        relatedArticles={article.related_articles || []}
+      />
+    </>
   )
 }

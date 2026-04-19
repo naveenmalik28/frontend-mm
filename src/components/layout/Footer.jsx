@@ -1,57 +1,68 @@
 import { Link } from "react-router-dom"
 
+import {
+  BRAND_COPY,
+  BUSINESS_CONFERENCES_URL,
+  BUSINESS_NAME,
+  BUSINESS_SERVICES_URL,
+  BUSINESS_URL,
+  CATEGORY_ORDER,
+  CATEGORY_LABELS,
+} from "../../config/site.js"
+import BrandLockup from "../brand/BrandLockup.jsx"
+
 export default function Footer() {
   return (
     <footer className="mt-20 border-t border-ink/10 bg-white/50 pt-16 pb-8">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-          
-          {/* Column 1: Brand */}
           <div className="space-y-4">
-            <div className="font-display text-2xl font-bold tracking-tight text-ink">Magnivel International Media</div>
-            <p className="max-w-xs text-sm text-ink/70 leading-relaxed">
-              A global platform for thought-sharing and innovation. Read deep insights, publish your own perspective, and shape the future.
+            <BrandLockup compact />
+            <p className="max-w-xs text-sm leading-relaxed text-ink/70">
+              Search-first reporting and analysis for readers discovering the future through technology, business,
+              science, and society.
             </p>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-coral">{BRAND_COPY}</p>
           </div>
 
-          {/* Column 2: Topics */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-ink/50 mb-4">Topics</h4>
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-ink/50">Topics</h4>
             <ul className="space-y-3 text-sm text-ink/80">
-              <li><Link to="/category/technology-innovation" className="hover:text-coral transition-colors">Technology & Innovation</Link></li>
-              <li><Link to="/category/artificial-intelligence" className="hover:text-coral transition-colors">Artificial Intelligence</Link></li>
-              <li><Link to="/category/biomedical-health" className="hover:text-coral transition-colors">Biomedical & Health</Link></li>
-              <li><Link to="/category/business-startups" className="hover:text-coral transition-colors">Business & Startups</Link></li>
-              <li><Link to="/category/education-careers" className="hover:text-coral transition-colors">Education & Careers</Link></li>
-              <li><Link to="/category/science-research" className="hover:text-coral transition-colors">Science & Research</Link></li>
-              <li><Link to="/category/society-culture" className="hover:text-coral transition-colors">Society & Culture</Link></li>
+              {CATEGORY_ORDER.map((slug) => (
+                <li key={slug}>
+                  <Link to={`/category/${slug}`} className="transition-colors hover:text-coral">
+                    {CATEGORY_LABELS[slug]}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Column 3: The Platform */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-ink/50 mb-4">The Platform</h4>
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-ink/50">The Platform</h4>
             <ul className="space-y-3 text-sm text-ink/80">
-              <li><Link to="/explore" className="hover:text-coral transition-colors">Latest Stories</Link></li>
-              <li><Link to="/plans" className="hover:text-coral transition-colors">Writer Plans</Link></li>
-              <li><Link to="/about" className="hover:text-coral transition-colors">About Us</Link></li>
-              <li><Link to="/contact" className="hover:text-coral transition-colors">Contact & Support</Link></li>
+              <li><Link to="/explore" className="transition-colors hover:text-coral">Latest Stories</Link></li>
+              <li><Link to="/plans" className="transition-colors hover:text-coral">Writer Plans</Link></li>
+              <li><Link to="/about" className="transition-colors hover:text-coral">About Us</Link></li>
+              <li><Link to="/contact" className="transition-colors hover:text-coral">Contact & Support</Link></li>
+              <li><a href={BUSINESS_URL} target="_blank" rel="noreferrer" className="transition-colors hover:text-coral">{BUSINESS_NAME}</a></li>
+              <li><a href={BUSINESS_SERVICES_URL} target="_blank" rel="noreferrer" className="transition-colors hover:text-coral">Business Services</a></li>
+              <li><a href={BUSINESS_CONFERENCES_URL} target="_blank" rel="noreferrer" className="transition-colors hover:text-coral">Conferences</a></li>
             </ul>
           </div>
 
-          {/* Column 4: Newsletter */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-ink/50 mb-4">Newsletter</h4>
-            <p className="text-sm text-ink/70 mb-4">Subscribe to our weekly digest of the best ideas.</p>
-            <form className="flex rounded-md border border-ink/20 p-1 focus-within:border-coral focus-within:ring-1 focus-within:ring-coral bg-white">
-              <input 
-                type="email" 
-                placeholder="Your email address" 
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-ink/50">Newsletter</h4>
+            <p className="mb-4 text-sm text-ink/70">Subscribe to our weekly digest of the best ideas.</p>
+            <form className="flex rounded-md border border-ink/20 bg-white p-1 focus-within:border-coral focus-within:ring-1 focus-within:ring-coral">
+              <input
+                type="email"
+                placeholder="Your email address"
                 className="w-full bg-transparent px-3 py-2 text-sm text-ink placeholder:text-ink/40 outline-none"
               />
-              <button 
-                type="button" 
-                className="rounded bg-coral px-4 py-2 text-sm font-semibold text-white transition hover:bg-coral/90 shrink-0"
+              <button
+                type="button"
+                className="shrink-0 rounded bg-coral px-4 py-2 text-sm font-semibold text-white transition hover:bg-coral/90"
               >
                 Join
               </button>
@@ -59,15 +70,14 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 border-t border-ink/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-ink/50">
-          <p>© {new Date().getFullYear()} Magnivel International Media. All rights reserved.</p>
+        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-ink/10 pt-8 text-xs text-ink/50 md:flex-row">
+          <p>&copy; {new Date().getFullYear()} Magnivel Media. {BRAND_COPY}.</p>
           <div className="flex gap-4">
-            <Link to="/privacy" className="hover:text-ink transition-colors">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-ink transition-colors">Terms of Service</Link>
+            <Link to="/privacy" className="transition-colors hover:text-ink">Privacy Policy</Link>
+            <Link to="/terms" className="transition-colors hover:text-ink">Terms of Service</Link>
           </div>
         </div>
       </div>
     </footer>
   )
 }
-

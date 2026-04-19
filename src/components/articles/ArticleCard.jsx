@@ -5,7 +5,7 @@ import TagBadge from "./TagBadge.jsx"
 
 function ArticleCard({ article }) {
   return (
-    <article className="glass-panel group flex h-full flex-col p-5 transition-shadow hover:shadow-card">
+    <article className="glass-panel group relative flex h-full flex-col p-5 transition-shadow hover:shadow-card">
       {article.cover_image && (
         <div className="relative mb-5 -mx-5 -mt-5 h-48 shrink-0 overflow-hidden rounded-t-[28px]">
           <img
@@ -46,7 +46,14 @@ function ArticleCard({ article }) {
 
       <div className="relative z-10 mt-6 flex items-center justify-between text-sm font-medium">
         <span className="text-ink/60">{article.author?.full_name || article.author?.username || "Magnivel Media"}</span>
-        {article.cover_image && <span className="text-xs text-ink/40">{article.read_time} min read</span>}
+        <div className="flex items-center gap-3 text-xs text-ink/40">
+          {article.cover_image ? <span>{article.read_time} min read</span> : null}
+          {article.category?.slug ? (
+            <Link to={`/category/${article.category.slug}`} className="relative z-10 font-semibold text-coral hover:text-coral/80">
+              {article.category.name}
+            </Link>
+          ) : null}
+        </div>
       </div>
     </article>
   )
