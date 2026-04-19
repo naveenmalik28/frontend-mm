@@ -9,7 +9,7 @@ import Spinner from "../components/ui/Spinner.jsx"
 import {
   BRAND_COPY,
   BUSINESS_NAME,
-  BUSINESS_SERVICES_URL,
+  BUSINESS_URL,
   CATEGORY_LABELS,
   SITE_NAME,
   SITE_TAGLINE,
@@ -108,7 +108,7 @@ export default function Home() {
                   <Link to={`/article/${featuredArticle.slug}`}>
                     <Button className="border-0 bg-coral px-7">Read Feature</Button>
                   </Link>
-                  <a href={BUSINESS_SERVICES_URL} target="_blank" rel="noreferrer">
+                  <a href={BUSINESS_URL} target="_blank" rel="noreferrer">
                     <Button variant="ghost" className="border border-white/20 bg-white/10 px-7 text-white hover:bg-white/15">
                       Visit {BUSINESS_NAME}
                     </Button>
@@ -170,7 +170,7 @@ export default function Home() {
                 Become a Contributor
               </Button>
             </Link>
-            <a href={BUSINESS_SERVICES_URL} target="_blank" rel="noreferrer">
+            <a href={BUSINESS_URL} target="_blank" rel="noreferrer">
               <Button variant="ghost" className="border border-white/20 px-8 py-4 text-base hover:bg-white/10">
                 Visit {BUSINESS_NAME}
               </Button>
