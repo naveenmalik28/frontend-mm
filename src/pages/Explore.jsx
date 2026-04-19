@@ -1,6 +1,6 @@
-import { useMemo } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useCallback, useMemo } from "react"
 import { Helmet } from "react-helmet-async"
+import { useNavigate, useParams } from "react-router-dom"
 
 import ArticleList from "../components/articles/ArticleList.jsx"
 import CategoryFilter from "../components/articles/CategoryFilter.jsx"
@@ -10,20 +10,27 @@ import { useArticles } from "../hooks/useArticles.js"
 export default function Explore() {
   const { slug } = useParams()
   const navigate = useNavigate()
-  
+
   const category = slug || ""
   const params = useMemo(() => (category ? { category } : {}), [category])
   const { articles, categories, loading, meta } = useArticles(params)
 
-  const handleCategoryChange = (newCategorySlug) => {
-    if (newCategorySlug) {
-      navigate(`/category/${newCategorySlug}`)
-    } else {
-      navigate('/explore')
-    }
-  }
+  const handleCategoryChange = useCallback(
+    (newCategorySlug) => {
+      if (newCategorySlug) {
+        navigate(`/category/${newCategorySlug}`)
+        return
+      }
 
-  const currentCatName = categories.find(c => c.slug === category)?.name || "All categories"
+      navigate("/explore")
+    },
+    [navigate],
+  )
+
+  const currentCatName = useMemo(
+    () => categories.find((currentCategory) => currentCategory.slug === category)?.name || "All categories",
+    [categories, category],
+  )
 
   return (
     <div className="space-y-6">
@@ -44,4 +51,3 @@ export default function Explore() {
     </div>
   )
 }
-

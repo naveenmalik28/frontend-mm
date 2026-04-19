@@ -1,3 +1,4 @@
+import { memo } from "react"
 import { NavLink } from "react-router-dom"
 
 const links = [
@@ -9,7 +10,7 @@ const links = [
   { to: "/settings", label: "Settings" },
 ]
 
-export default function Sidebar() {
+function Sidebar() {
   return (
     <aside className="glass-panel p-4">
       <div className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-teal">Workspace</div>
@@ -30,3 +31,4 @@ export default function Sidebar() {
   )
 }
 
+export default memo(Sidebar)

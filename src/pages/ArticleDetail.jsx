@@ -9,12 +9,32 @@ import Spinner from "../components/ui/Spinner.jsx"
 export default function ArticleDetail() {
   const { slug } = useParams()
   const [article, setArticle] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [resolvedSlug, setResolvedSlug] = useState(null)
+  const loading = resolvedSlug !== slug
 
   useEffect(() => {
+    let mounted = true
+
     fetchArticleBySlug(slug)
-      .then(setArticle)
-      .finally(() => setLoading(false))
+      .then((data) => {
+        if (mounted) {
+          setArticle(data)
+        }
+      })
+      .catch(() => {
+        if (mounted) {
+          setArticle(null)
+        }
+      })
+      .finally(() => {
+        if (mounted) {
+          setResolvedSlug(slug)
+        }
+      })
+
+    return () => {
+      mounted = false
+    }
   }, [slug])
 
   if (loading) return <Spinner label="Loading article" />
@@ -39,7 +59,14 @@ export default function ArticleDetail() {
       </div>
       {article.cover_image && (
         <div className="mt-8 overflow-hidden rounded-[28px] shadow-sm md:h-[480px]">
-          <img src={article.cover_image} alt={article.title} className="h-full w-full object-cover" />
+          <img
+            src={article.cover_image}
+            alt={article.title}
+            className="h-full w-full object-cover"
+            decoding="async"
+            fetchPriority="high"
+            loading="eager"
+          />
         </div>
       )}
       <div
@@ -59,4 +86,3 @@ export default function ArticleDetail() {
     </article>
   )
 }
-

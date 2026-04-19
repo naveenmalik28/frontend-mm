@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { Suspense, lazy, useCallback, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 import {
@@ -10,9 +10,11 @@ import {
   publishArticle,
   updateArticle,
 } from "../../api/articles.api.js"
-import ArticleEditor from "../../components/articles/ArticleEditor.jsx"
 import Sidebar from "../../components/layout/Sidebar.jsx"
 import Button from "../../components/ui/Button.jsx"
+import Spinner from "../../components/ui/Spinner.jsx"
+
+const ArticleEditor = lazy(() => import("../../components/articles/ArticleEditor.jsx"))
 
 const EMPTY_FORM = {
   title: "",
@@ -54,7 +56,7 @@ export default function NewArticle() {
       fetchMyArticles()
         .then((data) => {
           if (!mounted) return
-          const article = (data.results || data).find((item) => item.id === id)
+          const article = (data.results || data).find((item) => String(item.id) === String(id))
           if (!article) {
             setError("Article not found.")
             return
@@ -87,6 +89,10 @@ export default function NewArticle() {
       }
     }
   }, [form.cover_image])
+
+  const handleEditorChange = useCallback((content) => {
+    setForm((currentForm) => ({ ...currentForm, content }))
+  }, [])
 
   const saveArticle = async (publish = false) => {
     setSaving(true)
@@ -180,7 +186,15 @@ export default function NewArticle() {
             
             <div>
               <label className="mb-2 block text-sm font-semibold text-ink">Content</label>
-              <ArticleEditor value={form.content} onChange={(content) => setForm({ ...form, content })} />
+              <Suspense
+                fallback={
+                  <div className="glass-panel p-6">
+                    <Spinner label="Loading editor..." />
+                  </div>
+                }
+              >
+                <ArticleEditor value={form.content} onChange={handleEditorChange} />
+              </Suspense>
             </div>
           </div>
 

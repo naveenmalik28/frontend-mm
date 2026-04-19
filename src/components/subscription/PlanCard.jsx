@@ -1,11 +1,10 @@
+import { memo } from "react"
 import { Link } from "react-router-dom"
 
-import Button from "../ui/Button.jsx"
 import { formatCurrencyAmount } from "../../utils/subscriptionPricing.js"
+import Button from "../ui/Button.jsx"
 
-export default function PlanCard({ plan }) {
-  // Removed getDisplayCurrency logic since both are shown.
-
+function PlanCard({ plan }) {
   return (
     <article
       className={`group relative overflow-hidden rounded-[32px] border p-7 transition duration-300 hover:-translate-y-2 hover:shadow-2xl ${
@@ -22,7 +21,9 @@ export default function PlanCard({ plan }) {
           <div>
             <div className="eyebrow">{plan.duration_days} day access</div>
             <h3 className="mt-4 font-display text-3xl text-ink">{plan.name}</h3>
-            <p className="mt-3 text-sm leading-6 text-ink/65">{plan.description || "Built for consistent publishing momentum and a smoother writing workflow."}</p>
+            <p className="mt-3 text-sm leading-6 text-ink/65">
+              {plan.description || "Built for consistent publishing momentum and a smoother writing workflow."}
+            </p>
           </div>
           {plan.is_popular && (
             <span className="rounded-full bg-coral px-3 py-1 text-[11px] font-bold uppercase tracking-[0.24em] text-white shadow-lg shadow-coral/25">
@@ -63,3 +64,5 @@ export default function PlanCard({ plan }) {
     </article>
   )
 }
+
+export default memo(PlanCard)

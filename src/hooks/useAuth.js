@@ -7,12 +7,12 @@ export function useAuthBootstrap() {
   const accessToken = useAuthStore((state) => state.accessToken)
   const updateUser = useAuthStore((state) => state.updateUser)
   const logout = useAuthStore((state) => state.logout)
-  const [loading, setLoading] = useState(Boolean(accessToken))
+  const [resolvedAccessToken, setResolvedAccessToken] = useState(null)
+  const loading = Boolean(accessToken) && resolvedAccessToken !== accessToken
 
   useEffect(() => {
     let active = true
     if (!accessToken) {
-      setLoading(false)
       return undefined
     }
 
@@ -29,7 +29,7 @@ export function useAuthBootstrap() {
       })
       .finally(() => {
         if (active) {
-          setLoading(false)
+          setResolvedAccessToken(accessToken)
         }
       })
 
@@ -40,4 +40,3 @@ export function useAuthBootstrap() {
 
   return { loading }
 }
-

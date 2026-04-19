@@ -2,12 +2,14 @@ import { Link, NavLink, useNavigate } from "react-router-dom"
 
 import { logoutUser } from "../../api/auth.api.js"
 import { useAuthStore } from "../../store/authStore.js"
+import { useSubscriptionStore } from "../../store/subscriptionStore.js"
 import Button from "../ui/Button.jsx"
 
 export default function Navbar() {
   const user = useAuthStore((state) => state.user)
   const refreshToken = useAuthStore((state) => state.refreshToken)
   const logout = useAuthStore((state) => state.logout)
+  const clearSubscription = useSubscriptionStore((state) => state.clearSubscription)
   const navigate = useNavigate()
 
   const handleLogout = async () => {
@@ -17,6 +19,7 @@ export default function Navbar() {
       // Ignore logout API issues and clear the client session anyway.
     } finally {
       logout()
+      clearSubscription()
       navigate("/")
     }
   }
@@ -56,4 +59,3 @@ export default function Navbar() {
     </header>
   )
 }
-

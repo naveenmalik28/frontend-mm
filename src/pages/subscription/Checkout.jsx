@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { createCheckout, verifyPayment } from "../../api/subscriptions.api.js"
 import Button from "../../components/ui/Button.jsx"
 import { useSubscriptionData } from "../../hooks/useSubscription.js"
+import { useSubscriptionStore } from "../../store/subscriptionStore.js"
 import {
   detectPreferredCurrency,
   formatCurrencyAmount,
@@ -17,11 +18,14 @@ export default function Checkout() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const { plans } = useSubscriptionData()
-  const [checkoutData, setCheckoutData] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState("")
+  const clearSubscription = useSubscriptionStore((state) => state.clearSubscription)
 
   const requestedCurrency = normalizeCurrency(searchParams.get("currency") || detectPreferredCurrency())
+  const requestKey = `${planId}:${requestedCurrency}`
+  const [checkoutState, setCheckoutState] = useState({ requestKey: null, data: null, error: "" })
+  const checkoutData = checkoutState.requestKey === requestKey ? checkoutState.data : null
+  const error = checkoutState.requestKey === requestKey ? checkoutState.error : ""
+  const loading = checkoutState.requestKey !== requestKey
   const selectedPlan = plans.find((plan) => String(plan.id) === String(planId))
   const displayCurrency = selectedPlan ? getDisplayCurrency(selectedPlan, requestedCurrency) : requestedCurrency
   const displayPrice = checkoutData
@@ -31,30 +35,26 @@ export default function Checkout() {
   useEffect(() => {
     let cancelled = false
 
-    setLoading(true)
-    setError("")
-
     createCheckout({ planId, currency: requestedCurrency })
       .then((data) => {
         if (!cancelled) {
-          setCheckoutData(data)
+          setCheckoutState({ requestKey, data, error: "" })
         }
       })
       .catch((requestError) => {
         if (!cancelled) {
-          setError(requestError.response?.data?.currency?.[0] || requestError.response?.data?.detail || "Unable to prepare checkout.")
-        }
-      })
-      .finally(() => {
-        if (!cancelled) {
-          setLoading(false)
+          setCheckoutState({
+            requestKey,
+            data: null,
+            error: requestError.response?.data?.currency?.[0] || requestError.response?.data?.detail || "Unable to prepare checkout.",
+          })
         }
       })
 
     return () => {
       cancelled = true
     }
-  }, [planId, requestedCurrency])
+  }, [planId, requestKey, requestedCurrency])
 
   const handlePay = async () => {
     if (!checkoutData) return
@@ -67,6 +67,7 @@ export default function Checkout() {
       currency: checkoutData.currency,
     }).catch(() => null)
 
+    clearSubscription()
     navigate("/subscription/success")
   }
 

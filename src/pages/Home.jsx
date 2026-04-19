@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from "react"
 import { Helmet } from "react-helmet-async"
 import { Link, useNavigate } from "react-router-dom"
 
@@ -11,9 +12,28 @@ export default function Home() {
   const navigate = useNavigate()
   const { articles, categories, loading } = useArticles({ ordering: "-published_at" })
 
-  const featuredArticle = articles.find((a) => a.is_featured) || articles[0]
-  const trendingArticles = articles.filter((a) => a.id !== featuredArticle?.id).slice(0, 3)
-  const feedArticles = articles.filter((a) => a.id !== featuredArticle?.id).slice(3, 9)
+  const { featuredArticle, trendingArticles, feedArticles } = useMemo(() => {
+    const nextFeaturedArticle = articles.find((article) => article.is_featured) || articles[0]
+    const remainingArticles = articles.filter((article) => article.id !== nextFeaturedArticle?.id)
+
+    return {
+      featuredArticle: nextFeaturedArticle,
+      trendingArticles: remainingArticles.slice(0, 3),
+      feedArticles: remainingArticles.slice(3, 9),
+    }
+  }, [articles])
+
+  const handleCategoryChange = useCallback(
+    (slug) => {
+      if (slug) {
+        navigate(`/category/${slug}`)
+        return
+      }
+
+      navigate("/explore")
+    },
+    [navigate],
+  )
 
   return (
     <div className="space-y-16">
@@ -29,13 +49,20 @@ export default function Home() {
         <div className="glass-panel overflow-hidden">
           {loading || !featuredArticle ? (
             <div className="flex h-[500px] items-center justify-center p-8">
-              <Spinner label="Loading featured insight…" />
+              <Spinner label="Loading featured insight..." />
             </div>
           ) : (
             <div className="group relative flex h-full flex-col justify-end p-8 md:min-h-[500px] md:p-12">
               {featuredArticle.cover_image && (
                 <div className="absolute inset-0 -z-10">
-                  <img src={featuredArticle.cover_image} alt={featuredArticle.title} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+                  <img
+                    src={featuredArticle.cover_image}
+                    alt={featuredArticle.title}
+                    className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                    decoding="async"
+                    fetchPriority="high"
+                    loading="eager"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/40 to-transparent"></div>
                 </div>
               )}
@@ -115,14 +142,7 @@ export default function Home() {
 
       {/* Latest Feed */}
       <section className="space-y-6">
-        <CategoryFilter 
-          categories={categories} 
-          activeCategory="" 
-          onChange={(slug) => {
-            if (slug) navigate(`/category/${slug}`)
-            else navigate("/explore")
-          }} 
-        />
+        <CategoryFilter categories={categories} activeCategory="" onChange={handleCategoryChange} />
         {loading ? <Spinner /> : <ArticleList articles={feedArticles} />}
         {!loading && feedArticles.length > 0 && (
           <div className="mt-8 text-center border-t border-ink/5 pt-8">

@@ -1,17 +1,22 @@
+import { useMemo } from "react"
+
 import PlanCard from "../../components/subscription/PlanCard.jsx"
 import Spinner from "../../components/ui/Spinner.jsx"
 import { useSubscriptionData } from "../../hooks/useSubscription.js"
 
-
 export default function Plans() {
   const { plans, loading } = useSubscriptionData()
 
-  const sortedPlans = [...plans].sort((left, right) => {
-    const leftSort = Number(left.sort_order ?? 0)
-    const rightSort = Number(right.sort_order ?? 0)
-    if (leftSort !== rightSort) return leftSort - rightSort
-    return Number(left.price ?? 0) - Number(right.price ?? 0)
-  })
+  const sortedPlans = useMemo(
+    () =>
+      [...plans].sort((left, right) => {
+        const leftSort = Number(left.sort_order ?? 0)
+        const rightSort = Number(right.sort_order ?? 0)
+        if (leftSort !== rightSort) return leftSort - rightSort
+        return Number(left.price ?? 0) - Number(right.price ?? 0)
+      }),
+    [plans],
+  )
 
   return (
     <div className="space-y-8">
