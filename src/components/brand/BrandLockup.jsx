@@ -12,7 +12,6 @@ export default function BrandLockup({ compact = false }) {
         MM
       </div>
       <div>
-        <div className="text-[11px] font-bold uppercase tracking-[0.34em] text-coral">{BRAND_COPY}</div>
         <div className="font-display text-xl leading-tight text-ink">{SITE_NAME}</div>
       </div>
     </Wrapper>
