@@ -1,7 +1,7 @@
 {
   "name": "Magnivel Media",
   "short_name": "Magnivel",
-  "description": "Search-first analysis on AI, technology, software development, business, cybersecurity, health, science, and society.",
+  "description": "Magnivel Media is a platform where users can read and write articles, blogs, and stories across AI, technology, health, biomedical, business, and society.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Allow: /article/*
 
-Sitemap: https://www.magnivel.com/sitemap.xml
+Sitemap: https://magnivel.com/sitemap.xml
