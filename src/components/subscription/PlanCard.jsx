@@ -4,7 +4,9 @@ import { Link } from "react-router-dom"
 import { detectPreferredCurrency, getDisplayCurrency, formatPlanPrice } from "../../utils/subscriptionPricing.js"
 import Button from "../ui/Button.jsx"
 
-function PlanCard({ plan }) {
+function PlanCard({ plan, currency }) {
+  const resolvedCurrency = currency || detectPreferredCurrency()
+
   return (
     <article
       className={`group relative overflow-hidden rounded-[32px] border p-7 transition duration-300 hover:-translate-y-2 hover:shadow-2xl ${
@@ -37,10 +39,10 @@ function PlanCard({ plan }) {
           <div className="mt-4 flex flex-col gap-3">
             <div className="flex items-end gap-2">
               <p className="font-display text-4xl leading-none text-ink">
-                {formatPlanPrice(plan, detectPreferredCurrency())}
+                {formatPlanPrice(plan, resolvedCurrency)}
               </p>
               <span className="pb-1 text-xs font-bold uppercase tracking-wider text-ink/40">
-                {getDisplayCurrency(plan, detectPreferredCurrency())}
+                {getDisplayCurrency(plan, resolvedCurrency)}
               </span>
             </div>
           </div>
@@ -55,7 +57,7 @@ function PlanCard({ plan }) {
           ))}
         </ul>
 
-        <Link className="relative mt-8 inline-flex" to={`/checkout/${plan.id}`}>
+        <Link className="relative mt-8 inline-flex" to={`/checkout/${plan.id}?currency=${resolvedCurrency}`}>
           <Button className="w-full shadow-lg shadow-coral/20">Subscribe now</Button>
         </Link>
       </div>
@@ -64,3 +66,4 @@ function PlanCard({ plan }) {
 }
 
 export default memo(PlanCard)
+

@@ -1,9 +1,10 @@
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import { Link } from "react-router-dom"
 
 import PlanCard from "../../components/subscription/PlanCard.jsx"
 import Spinner from "../../components/ui/Spinner.jsx"
 import { useSubscriptionData } from "../../hooks/useSubscription.js"
+import { detectPreferredCurrency } from "../../utils/subscriptionPricing.js"
 
 const CheckIcon = () => (
   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -35,6 +36,7 @@ const SparkIcon = () => (
 
 export default function Plans() {
   const { plans, loading } = useSubscriptionData()
+  const [currency, setCurrency] = useState(detectPreferredCurrency)
 
   const sortedPlans = useMemo(
     () =>
@@ -139,7 +141,36 @@ export default function Plans() {
       <section className="space-y-8">
         <div className="text-center max-w-2xl mx-auto">
           <h2 className="font-display text-3xl sm:text-4xl font-bold text-ink mb-2">Choose Your Plan</h2>
-          <p className="text-ink/70">All plans renew monthly. Cancel anytime with no penalties.</p>
+          <p className="text-ink/70 mb-6">All plans renew monthly. Cancel anytime with no penalties.</p>
+
+          {/* Currency Selector */}
+          <div className="inline-flex items-center gap-1 rounded-full bg-white border border-ink/10 p-1 shadow-sm">
+            <button
+              type="button"
+              onClick={() => setCurrency("INR")}
+              className={`flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-200 ${
+                currency === "INR"
+                  ? "bg-ink text-white shadow-md"
+                  : "text-ink/60 hover:text-ink hover:bg-sand"
+              }`}
+            >
+              <span className="text-base">₹</span> INR
+            </button>
+            <button
+              type="button"
+              onClick={() => setCurrency("USD")}
+              className={`flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-200 ${
+                currency === "USD"
+                  ? "bg-ink text-white shadow-md"
+                  : "text-ink/60 hover:text-ink hover:bg-sand"
+              }`}
+            >
+              <span className="text-base">$</span> USD
+            </button>
+          </div>
+          <p className="mt-3 text-xs text-ink/50">
+            {currency === "INR" ? "Prices shown in Indian Rupees (₹). For users in India." : "Prices shown in US Dollars ($). For international users."}
+          </p>
         </div>
 
         {loading ? (
@@ -148,7 +179,7 @@ export default function Plans() {
           <div className="grid gap-6 lg:grid-cols-3">
             {sortedPlans.map((plan) => (
               <div key={plan.id} className="animate-fade-in-up">
-                <PlanCard plan={plan} />
+                <PlanCard plan={plan} currency={currency} />
               </div>
             ))}
           </div>
