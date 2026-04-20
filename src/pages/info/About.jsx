@@ -45,23 +45,31 @@ const ArrowRightIcon = ({ className }) => (
 
 export default function About() {
   return (
-    <div className="mx-auto max-w-5xl py-16 px-4 sm:px-6 lg:px-8">
+    <div className="space-y-16 pb-16">
       {/* Intro Section / Hero */}
-      <div className="text-center mb-20">
-        <span className="inline-block py-1.5 px-4 rounded-full bg-slate-100 text-slate-700 text-sm font-semibold tracking-wider uppercase mb-5 border border-slate-200 shadow-sm">About Us</span>
-        <h1 className="font-display text-4xl font-extrabold tracking-tight text-ink md:text-6xl mb-6">
-          Empowering Global <span className="text-transparent bg-clip-text bg-gradient-to-r from-coral to-teal">Perspectives</span>
-        </h1>
-        <p className="mx-auto max-w-3xl text-xl text-ink/70 leading-relaxed font-light">
-          <strong>Magnivel International Media</strong> is a modern platform for thought-provoking ideas, innovative insights, and diverse perspectives from voices around the world. We bring together thinkers, creators, and professionals to share knowledge that inspires, informs, and drives meaningful conversations.
-        </p>
-      </div>
+      <section className="relative overflow-hidden rounded-[32px] border border-white/40 bg-gradient-to-br from-slate-50 via-white to-slate-50/50 p-8 sm:p-16 shadow-lg shadow-ink/5 text-center">
+        <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-coral/10 blur-3xl"></div>
+        <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-teal/10 blur-3xl"></div>
 
-      <div className="space-y-16">
+        <div className="relative z-10 max-w-4xl mx-auto">
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/60 px-4 py-2 mb-6 border border-slate-200 shadow-sm">
+            <GlobeIcon className="text-ink h-4 w-4" />
+            <span className="text-sm font-semibold text-ink uppercase tracking-wider">About Us</span>
+          </div>
+          <h1 className="font-display text-4xl sm:text-6xl font-bold tracking-tight text-ink md:text-6xl mb-6">
+            Empowering Global <span className="text-transparent bg-clip-text bg-gradient-to-r from-coral to-teal">Perspectives</span>
+          </h1>
+          <p className="mx-auto max-w-3xl text-xl text-ink/70 leading-relaxed font-light">
+            <strong>Magnivel International Media</strong> is a modern platform for thought-provoking ideas, innovative insights, and diverse perspectives from voices around the world. We bring together thinkers, creators, and professionals to share knowledge that inspires, informs, and drives meaningful conversations.
+          </p>
+        </div>
+      </section>
+
+      <div className="space-y-16 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Mission & What We Cover - Grid Layout */}
         <div className="grid md:grid-cols-2 gap-8">
           {/* Mission */}
-          <div className="bg-white rounded-3xl p-10 shadow-xl shadow-slate-200/40 border border-slate-100 relative overflow-hidden group">
+          <div className="glass-panel p-10 relative overflow-hidden group">
             <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-coral to-coral/50"></div>
             <h2 className="font-display text-3xl font-bold text-ink mb-6 flex items-center">
               Our Mission
@@ -84,7 +92,7 @@ export default function About() {
           </div>
 
           {/* What We Cover */}
-          <div className="bg-ink rounded-3xl p-10 shadow-xl shadow-ink/20 text-white relative overflow-hidden">
+          <div className="bg-ink rounded-[24px] p-10 shadow-xl shadow-ink/20 text-white relative overflow-hidden">
             <div className="absolute -top-24 -right-24 w-48 h-48 bg-teal rounded-full blur-3xl opacity-20"></div>
             <h2 className="font-display text-3xl font-bold text-white mb-6">
               What We Cover
@@ -114,7 +122,7 @@ export default function About() {
         </div>
 
         {/* Community & Why Join */}
-        <div className="bg-slate-50 rounded-3xl p-10 md:p-16 border border-slate-200/60 shadow-lg shadow-slate-200/30">
+        <div className="glass-panel p-10 md:p-16 border-white/60">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="font-display text-3xl md:text-4xl font-bold text-ink mb-6">
@@ -125,7 +133,7 @@ export default function About() {
               </p>
               <div className="flex flex-wrap gap-3 mb-6">
                 {['Students', 'Professionals', 'Researchers', 'Independent thinkers'].map((item) => (
-                  <span key={item} className="bg-white px-4 py-2 rounded-full text-ink font-semibold border border-slate-200 shadow-sm text-sm">
+                  <span key={item} className="bg-white/60 px-4 py-2 rounded-full text-ink font-semibold border border-slate-200 shadow-sm text-sm">
                     {item}
                   </span>
                 ))}
@@ -139,29 +147,29 @@ export default function About() {
               <h3 className="font-display text-2xl font-bold text-ink mb-6 border-b border-slate-200 pb-4">
                 🔥 Why Join Us
               </h3>
-              <ul className="space-y-5">
-                <li className="flex items-start bg-white p-4 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+              <ul className="space-y-4">
+                <li className="flex items-start bg-white/50 p-4 rounded-xl border border-white shadow-sm hover:shadow-md transition-shadow">
                   <div className="bg-teal/10 text-teal p-2 rounded-lg mr-4"><GlobeIcon className="h-6 w-6" /></div>
                   <div>
                     <h4 className="font-bold text-ink">Reach a global audience</h4>
                     <p className="text-sm text-ink/60 mt-1">Amplify your voice beyond borders.</p>
                   </div>
                 </li>
-                <li className="flex items-start bg-white p-4 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                <li className="flex items-start bg-white/50 p-4 rounded-xl border border-white shadow-sm hover:shadow-md transition-shadow">
                   <div className="bg-coral/10 text-coral p-2 rounded-lg mr-4"><EditIcon className="h-6 w-6" /></div>
                   <div>
                     <h4 className="font-bold text-ink">Share your ideas freely</h4>
                     <p className="text-sm text-ink/60 mt-1">Publish content unconditionally.</p>
                   </div>
                 </li>
-                <li className="flex items-start bg-white p-4 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                <li className="flex items-start bg-white/50 p-4 rounded-xl border border-white shadow-sm hover:shadow-md transition-shadow">
                   <div className="bg-blue-100 text-blue-600 p-2 rounded-lg mr-4"><MessageIcon className="h-6 w-6" /></div>
                   <div>
                     <h4 className="font-bold text-ink">Engage in discussions</h4>
                     <p className="text-sm text-ink/60 mt-1">Connect and debate ideas.</p>
                   </div>
                 </li>
-                <li className="flex items-start bg-white p-4 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                <li className="flex items-start bg-white/50 p-4 rounded-xl border border-white shadow-sm hover:shadow-md transition-shadow">
                   <div className="bg-orange-100 text-orange-600 p-2 rounded-lg mr-4"><TrendingIcon className="h-6 w-6" /></div>
                   <div>
                     <h4 className="font-bold text-ink">Build your personal brand</h4>
@@ -172,33 +180,33 @@ export default function About() {
             </div>
           </div>
         </div>
-      </div>
 
-      {/* CTA Section */}
-      <div className="mt-20 text-center bg-ink rounded-3xl p-12 md:p-16 text-white relative overflow-hidden shadow-2xl">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-coral to-coral/50 rounded-full blur-3xl opacity-20 transform translate-x-1/2 -translate-y-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-teal to-teal/50 rounded-full blur-3xl opacity-20 transform -translate-x-1/2 translate-y-1/2"></div>
+        {/* CTA Section */}
+        <div className="text-center bg-ink rounded-[28px] p-12 md:p-16 text-white relative overflow-hidden shadow-2xl">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-coral to-coral/50 rounded-full blur-3xl opacity-20 transform translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-teal to-teal/50 rounded-full blur-3xl opacity-20 transform -translate-x-1/2 translate-y-1/2"></div>
 
-        <div className="relative z-10">
-          <h2 className="font-display text-4xl font-extrabold mb-4 text-white">
-            Join a community of thinkers shaping the future.
-          </h2>
-          <p className="text-xl text-white/70 mb-10 max-w-2xl mx-auto font-light">
-            Whether you want to write, read, or engage, there's a place for you here.
-          </p>
+          <div className="relative z-10">
+            <h2 className="font-display text-4xl font-extrabold mb-4 text-white">
+              Join a community of thinkers shaping the future.
+            </h2>
+            <p className="text-xl text-white/70 mb-10 max-w-2xl mx-auto font-light">
+              Whether you want to write, read, or engage, there's a place for you here.
+            </p>
 
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12">
-            <Link to="/explore" className="w-full sm:w-auto flex items-center justify-center px-8 py-4 rounded-full bg-white/10 text-white font-bold hover:bg-white/20 transition-colors border border-white/20">
-              <GlobeIcon className="mr-2 h-5 w-5" /> Explore Ideas
-            </Link>
-            <Link to="/register" className="w-full sm:w-auto flex items-center justify-center px-8 py-4 rounded-full bg-coral text-white font-bold hover:bg-coral/90 transition-colors shadow-lg shadow-coral/30">
-              Become a Contributor <ArrowRightIcon className="ml-2 h-5 w-5" />
-            </Link>
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12">
+              <Link to="/explore" className="w-full sm:w-auto flex items-center justify-center px-8 py-4 rounded-full bg-white/10 text-white font-bold hover:bg-white/20 transition-colors border border-white/20">
+                <GlobeIcon className="mr-2 h-5 w-5" /> Explore Ideas
+              </Link>
+              <Link to="/register" className="w-full sm:w-auto flex items-center justify-center px-8 py-4 rounded-full bg-coral text-white font-bold hover:bg-coral/90 transition-colors shadow-lg shadow-coral/30">
+                Become a Contributor <ArrowRightIcon className="ml-2 h-5 w-5" />
+              </Link>
+            </div>
+
+            <p className="text-sm font-medium text-white/50 tracking-wider uppercase mt-8 border-t border-white/10 pt-8 inline-block">
+              Support independent thinking. Share knowledge. Inspire the world.
+            </p>
           </div>
-
-          <p className="text-sm font-medium text-white/50 tracking-wider uppercase mt-8 border-t border-white/10 pt-8 inline-block">
-            Support independent thinking. Share knowledge. Inspire the world.
-          </p>
         </div>
       </div>
     </div>
