@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import SeoHead from "../../components/seo/SeoHead.jsx"
 
 const DocumentIcon = ({ className }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -14,6 +15,11 @@ const DocumentIcon = ({ className }) => (
 export default function TermsOfService() {
   return (
     <div className="space-y-12 pb-16">
+      <SeoHead
+        title="Terms of Service"
+        description="Review Magnivel International Media's Terms of Service. Understand your rights, responsibilities, and the rules governing use of our publishing platform."
+        path="/terms"
+      />
       {/* Hero */}
       <section className="relative overflow-hidden rounded-[32px] border border-white/40 bg-gradient-to-br from-slate-50 via-white to-slate-50/50 p-8 sm:p-16 shadow-lg shadow-ink/5 text-center">
         <div className="absolute top-0 left-1/4 h-64 w-64 rounded-full bg-coral/10 blur-3xl"></div>

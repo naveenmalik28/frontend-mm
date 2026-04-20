@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import SeoHead from "../../components/seo/SeoHead.jsx"
 
 const ShieldIcon = ({ className }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -10,6 +11,11 @@ const ShieldIcon = ({ className }) => (
 export default function PrivacyPolicy() {
   return (
     <div className="space-y-12 pb-16">
+      <SeoHead
+        title="Privacy Policy"
+        description="Read Magnivel International Media's Privacy Policy. Learn how we collect, use, and protect your personal information when you use our platform."
+        path="/privacy"
+      />
       {/* Hero */}
       <section className="relative overflow-hidden rounded-[32px] border border-white/40 bg-gradient-to-br from-slate-50 via-white to-slate-50/50 p-8 sm:p-16 shadow-lg shadow-ink/5 text-center">
         <div className="absolute top-0 right-1/4 h-64 w-64 rounded-full bg-teal/10 blur-3xl"></div>

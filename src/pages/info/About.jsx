@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import SeoHead from "../../components/seo/SeoHead.jsx"
 
 const CheckCircleIcon = ({ className }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -46,6 +47,11 @@ const ArrowRightIcon = ({ className }) => (
 export default function About() {
   return (
     <div className="space-y-16 pb-16">
+      <SeoHead
+        title="About Us"
+        description="Magnivel International Media is a modern platform for thought-provoking ideas, innovative insights, and diverse perspectives from voices around the world."
+        path="/about"
+      />
       {/* Intro Section / Hero */}
       <section className="relative overflow-hidden rounded-[32px] border border-white/40 bg-gradient-to-br from-slate-50 via-white to-slate-50/50 p-8 sm:p-16 shadow-lg shadow-ink/5 text-center">
         <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-coral/10 blur-3xl"></div>

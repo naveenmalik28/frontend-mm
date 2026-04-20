@@ -87,7 +87,7 @@ export default function Home() {
   return (
     <div className="space-y-16">
       <SeoHead
-        title="AI, Technology, Science, and Business Insights | Magnivel Media"
+        title="AI, Technology, Science, and Business Insights"
         description="Magnivel Media publishes search-first analysis on AI, technology, software development, cybersecurity, data science, health, science, education, society, and business. Powered by Magnivel International."
         path="/"
         schema={{

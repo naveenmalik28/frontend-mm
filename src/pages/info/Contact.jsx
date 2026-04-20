@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import SeoHead from "../../components/seo/SeoHead.jsx"
 import Button from "../../components/ui/Button.jsx"
 
 const MailIcon = ({ className }) => (
@@ -32,6 +33,11 @@ export default function Contact() {
 
   return (
     <div className="space-y-16">
+      <SeoHead
+        title="Contact Us"
+        description="Get in touch with Magnivel International Media. Reach out for editorial inquiries, technical support, press and partnerships, or general questions."
+        path="/contact"
+      />
       {/* Hero */}
       <section className="relative overflow-hidden rounded-[32px] border border-white/40 bg-gradient-to-br from-slate-50 via-white to-slate-50/50 p-8 sm:p-16 shadow-lg shadow-ink/5 text-center">
         <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-blue-100 blur-3xl"></div>

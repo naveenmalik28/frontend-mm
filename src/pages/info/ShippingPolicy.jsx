@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import SeoHead from "../../components/seo/SeoHead.jsx"
 
 const TruckIcon = ({ className }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -13,6 +14,11 @@ const TruckIcon = ({ className }) => (
 export default function ShippingPolicy() {
   return (
     <div className="space-y-12 pb-16">
+      <SeoHead
+        title="Shipping Policy"
+        description="Magnivel International Media is a digital-only platform. All products, services, and content are delivered electronically. Learn about our digital delivery policy."
+        path="/shipping-policy"
+      />
       {/* Hero */}
       <section className="relative overflow-hidden rounded-[32px] border border-white/40 bg-gradient-to-br from-slate-50 via-white to-slate-50/50 p-8 sm:p-16 shadow-lg shadow-ink/5 text-center">
         <div className="absolute top-0 left-1/3 h-64 w-64 rounded-full bg-blue-100 blur-3xl"></div>

@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import SeoHead from "../../components/seo/SeoHead.jsx"
 
 const RefreshIcon = ({ className }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -12,6 +13,11 @@ const RefreshIcon = ({ className }) => (
 export default function CancellationRefundPolicy() {
   return (
     <div className="space-y-12 pb-16">
+      <SeoHead
+        title="Cancellation & Refund Policy"
+        description="Understand Magnivel International Media's cancellation and refund policy. Learn about subscription cancellation, refund eligibility, and the refund request process."
+        path="/cancellation-refund-policy"
+      />
       {/* Hero */}
       <section className="relative overflow-hidden rounded-[32px] border border-white/40 bg-gradient-to-br from-slate-50 via-white to-slate-50/50 p-8 sm:p-16 shadow-lg shadow-ink/5 text-center">
         <div className="absolute top-0 right-1/3 h-64 w-64 rounded-full bg-coral/10 blur-3xl"></div>
