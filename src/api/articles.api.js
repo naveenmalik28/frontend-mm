@@ -74,6 +74,12 @@ export const fetchMyArticles = async (params = {}) => {
   return data
 }
 
+export const fetchMyStats = async () => {
+  const { data } = await api.get("/articles/my/stats/")
+  return data
+}
+
+
 export const createArticle = async (payload) => {
   const body = toArticleRequestBody(payload)
   const { data } = await api.post("/articles/", body, requestConfig(body))

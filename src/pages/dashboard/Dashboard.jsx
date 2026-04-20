@@ -1,18 +1,28 @@
+import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 
 import Sidebar from "../../components/layout/Sidebar.jsx"
 import SubscriptionBadge from "../../components/subscription/SubscriptionBadge.jsx"
 import { useAuthStore } from "../../store/authStore.js"
 import { useSubscriptionData } from "../../hooks/useSubscription.js"
+import { fetchMyStats } from "../../api/articles.api.js"
 
 export default function Dashboard() {
   const user = useAuthStore((state) => state.user)
   const { subscription } = useSubscriptionData(true)
 
+  const [apiStats, setApiStats] = useState({ total_views: 0, total_articles: 0, avg_read_time: 0 })
+
+  useEffect(() => {
+    fetchMyStats()
+      .then((data) => setApiStats(data))
+      .catch((err) => console.error("Failed to load stats", err))
+  }, [])
+
   const stats = [
     { 
-      label: "Published views", 
-      value: "12.4k",
+      label: "Total Views", 
+      value: apiStats.total_views.toLocaleString(),
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -21,8 +31,8 @@ export default function Dashboard() {
       )
     },
     { 
-      label: "Articles", 
-      value: "18",
+      label: "Published Articles", 
+      value: apiStats.total_articles.toLocaleString(),
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-.586-1.414l-4.5-4.5A2 2 0 0012.586 3H12" />
@@ -30,8 +40,8 @@ export default function Dashboard() {
       )
     },
     { 
-      label: "Conversion rate", 
-      value: "7.3%",
+      label: "Avg. read time", 
+      value: `${Math.round(apiStats.avg_read_time)}m`,
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />

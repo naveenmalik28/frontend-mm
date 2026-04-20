@@ -1,11 +1,21 @@
+import { useState, useEffect } from "react"
 import Sidebar from "../../components/layout/Sidebar.jsx"
+import { fetchMyStats } from "../../api/articles.api.js"
 
 export default function Analytics() {
+  const [apiStats, setApiStats] = useState({ total_views: 0, total_articles: 0, avg_read_time: 0 })
+
+  useEffect(() => {
+    fetchMyStats()
+      .then((data) => setApiStats(data))
+      .catch((err) => console.error("Failed to load stats", err))
+  }, [])
+
   const metrics = [
     { 
-      label: "Views this month", 
-      value: "5,420",
-      trend: "+12.5%",
+      label: "Total views", 
+      value: apiStats.total_views.toLocaleString(),
+      trend: "lifetime",
       positive: true,
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -16,8 +26,8 @@ export default function Analytics() {
     },
     { 
       label: "Avg. read time", 
-      value: "4m 32s",
-      trend: "+2.1%",
+      value: `${Math.round(apiStats.avg_read_time)}m`,
+      trend: "lifetime",
       positive: true,
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -26,10 +36,10 @@ export default function Analytics() {
       )
     },
     { 
-      label: "Subscriber clicks", 
-      value: "182",
-      trend: "-4.3%",
-      positive: false,
+      label: "Published Articles", 
+      value: apiStats.total_articles.toLocaleString(),
+      trend: "lifetime",
+      positive: true,
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
