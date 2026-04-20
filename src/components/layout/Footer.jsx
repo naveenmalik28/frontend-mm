@@ -74,7 +74,6 @@ export default function Footer() {
           <div className="flex flex-col gap-1 items-center md:items-start">
             <p>&copy; {new Date().getFullYear()} Magnivel Media. {BRAND_COPY}.</p>
             <p className="font-semibold text-ink/60">MAGNIVEL INTERNATIONAL PRIVATE LIMITED</p>
-            <p>Registered Office: [Update your Registered Office Address here]</p>
             <a href="mailto:finance@magnivelinternational.com" className="hover:text-ink">finance@magnivelinternational.com</a>
           </div>
           <div className="flex flex-col items-center md:items-end gap-2">
