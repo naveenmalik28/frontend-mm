@@ -53,6 +53,9 @@ export default function Contact() {
           <p className="mx-auto text-lg text-ink/70 leading-relaxed max-w-2xl">
             Whether you're a reader with a question, a writer looking to get published, or a press inquiry, our team is ready to assist you.
           </p>
+          <p className="mt-4 mx-auto text-sm text-ink/60 font-medium">
+            Magnivel.com is a property of MAGNIVEL INTERNATIONAL.
+          </p>
         </div>
       </section>
 

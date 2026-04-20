@@ -51,7 +51,7 @@ export default function PrivacyPolicy() {
             <ul className="space-y-2">
               <li>To provide, maintain, and improve our services.</li>
               <li>To personalize your experience, recommending articles tailored to your interests.</li>
-              <li>To process transactions if you are subscribed to a premium writer plan.</li>
+              <li>To process transactions and securely manage your subscription data if you are subscribed to a premium writer plan or reader plan on our blogging platform. Your payment details are handled securely by our payment gateway (Razorpay).</li>
               <li>To communicate with you regarding updates, security alerts, and support messages.</li>
             </ul>
 

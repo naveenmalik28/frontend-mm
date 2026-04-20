@@ -71,12 +71,20 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-ink/10 pt-8 text-xs text-ink/50 md:flex-row">
-          <p>&copy; {new Date().getFullYear()} Magnivel Media. {BRAND_COPY}.</p>
-          <div className="flex flex-wrap gap-4">
-            <Link to="/privacy" className="transition-colors hover:text-ink">Privacy Policy</Link>
-            <Link to="/terms" className="transition-colors hover:text-ink">Terms of Service</Link>
-            <Link to="/shipping-policy" className="transition-colors hover:text-ink">Shipping Policy</Link>
-            <Link to="/cancellation-refund-policy" className="transition-colors hover:text-ink">Cancellation & Refund</Link>
+          <div className="flex flex-col gap-1 items-center md:items-start">
+            <p>&copy; {new Date().getFullYear()} Magnivel Media. {BRAND_COPY}.</p>
+            <p className="font-semibold text-ink/60">MAGNIVEL INTERNATIONAL PRIVATE LIMITED</p>
+            <p>Registered Office: [Update your Registered Office Address here]</p>
+            <a href="mailto:finance@magnivelinternational.com" className="hover:text-ink">finance@magnivelinternational.com</a>
+          </div>
+          <div className="flex flex-col items-center md:items-end gap-2">
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link to="/privacy" className="transition-colors hover:text-ink">Privacy Policy</Link>
+              <Link to="/terms" className="transition-colors hover:text-ink">Terms of Service</Link>
+              <Link to="/shipping-policy" className="transition-colors hover:text-ink">Shipping Policy</Link>
+              <Link to="/cancellation-refund-policy" className="transition-colors hover:text-ink">Cancellation & Refund</Link>
+            </div>
+            <p className="text-[10px] text-ink/40 mt-1">Magnivel.com is a property of MAGNIVEL INTERNATIONAL.</p>
           </div>
         </div>
       </div>

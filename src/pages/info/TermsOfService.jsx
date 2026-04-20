@@ -55,17 +55,21 @@ export default function TermsOfService() {
               <li>Magnivel International Media reserves the right to suspend or terminate accounts that violate these terms.</li>
             </ul>
 
-            <h2 className="text-2xl mt-10 mb-4 border-b border-slate-200 pb-2">3. Content Ownership and Responsibility</h2>
+            <h2 className="text-2xl mt-10 mb-4 border-b border-slate-200 pb-2">3. Read and Write Rules (Content Ownership & Platform Conduct)</h2>
             <p>
-              We believe in empowering authors. You retain all ownership rights to the content you publish on Magnivel International Media. However, by publishing on our platform, you grant us a worldwide, non-exclusive, royalty-free license to distribute, display, and promote your content across our network.
+              As a blog platform, Magnivel International Media establishes the following "Read and Write" rules:
             </p>
-            <p>
+            <ul className="space-y-2">
+              <li><strong>Reading Rules:</strong> Users may freely read content published on the platform. Premium content or subscriber-only sections require an active subscription. Unauthorized scraping, copying, or redistribution of content is strictly prohibited.</li>
+              <li><strong>Writing Rules:</strong> We believe in empowering authors. You retain all ownership rights to the content you publish on Magnivel International Media. However, by publishing on our platform, you grant us a worldwide, non-exclusive, royalty-free license to distribute, display, and promote your content.</li>
+            </ul>
+            <p className="mt-4">
               You are solely responsible for the content you post. You must not publish content that:
             </p>
             <ul className="space-y-2">
               <li>Infringes on the intellectual property rights of others (plagiarism).</li>
               <li>Is defamatory, obscene, abusive, or promotes hate speech.</li>
-              <li>Violates the privacy rights of third parties.</li>
+              <li>Violates the privacy rights of third parties or includes illegal material.</li>
             </ul>
 
             <h2 className="text-2xl mt-10 mb-4 border-b border-slate-200 pb-2">4. Platform Conduct</h2>

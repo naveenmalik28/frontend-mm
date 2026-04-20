@@ -68,6 +68,9 @@ export default function About() {
           <p className="mx-auto max-w-3xl text-xl text-ink/70 leading-relaxed font-light">
             <strong>Magnivel International Media</strong> is a modern platform for thought-provoking ideas, innovative insights, and diverse perspectives from voices around the world. We bring together thinkers, creators, and professionals to share knowledge that inspires, informs, and drives meaningful conversations.
           </p>
+          <p className="mt-4 mx-auto max-w-3xl text-lg text-ink/60 font-medium">
+            Magnivel.com is a property of MAGNIVEL INTERNATIONAL.
+          </p>
         </div>
       </section>
 

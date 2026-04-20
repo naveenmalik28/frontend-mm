@@ -46,9 +46,12 @@ export default function ShippingPolicy() {
             <p>
               Since Magnivel International Media operates as a fully digital media and publishing platform, all our services — including article access, writer subscriptions, and premium content — are delivered instantly online. There is no physical shipping involved.
             </p>
+            <p className="font-semibold text-ink my-4">
+              Access to premium content is granted immediately upon successful payment confirmation.
+            </p>
             <ul className="space-y-2">
-              <li><strong>Content Access:</strong> Articles, stories, and editorial content are accessible immediately upon publication or purchase through your browser or our platform.</li>
-              <li><strong>Subscription Activation:</strong> Once your writer subscription plan is confirmed and payment is processed, the premium features are activated within your account instantly — no waiting period.</li>
+              <li><strong>Content Access:</strong> Articles, stories, and editorial content are accessible immediately upon publication or purchase tracking.</li>
+              <li><strong>Subscription Activation:</strong> Once your writer or reader subscription plan is confirmed and payment is processed, the premium features are activated within your account instantly — no waiting period.</li>
               <li><strong>Digital Resources:</strong> Any additional resources, templates, or premium downloads associated with your subscription are available for immediate download from your Dashboard.</li>
             </ul>
 
