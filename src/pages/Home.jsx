@@ -2,6 +2,7 @@ import { useCallback, useMemo } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
 import ArticleList from "../components/articles/ArticleList.jsx"
+import OptimizedImage from "../components/ui/OptimizedImage.jsx"
 import CategoryFilter from "../components/articles/CategoryFilter.jsx"
 import SeoHead from "../components/seo/SeoHead.jsx"
 import Button from "../components/ui/Button.jsx"
@@ -15,6 +16,7 @@ import {
   SITE_TAGLINE,
 } from "../config/site.js"
 import { useArticles } from "../hooks/useArticles.js"
+import { HERO_IMAGE_SIZES } from "../utils/cloudinaryImage.js"
 
 // Icons
 const SparklesIcon = () => (
@@ -163,13 +165,13 @@ export default function Home() {
             <div className="group relative flex h-full flex-col justify-end p-8 md:min-h-[500px] md:p-12">
               {featuredArticle.cover_image && (
                 <div className="absolute inset-0 -z-10">
-                  <img
+                  <OptimizedImage
                     src={featuredArticle.cover_image}
                     alt={featuredArticle.title}
+                    width={1200}
+                    sizes={HERO_IMAGE_SIZES}
+                    priority
                     className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-                    decoding="async"
-                    fetchPriority="high"
-                    loading="eager"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/40 to-transparent"></div>
                 </div>

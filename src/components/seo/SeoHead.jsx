@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async"
 
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "../../config/site.js"
+import { getOptimizedImageUrl } from "../../utils/cloudinaryImage.js"
 
 const absoluteUrl = (value = "") => {
   if (!value) return SITE_URL
@@ -18,7 +19,8 @@ export default function SeoHead({
   keywords,
 }) {
   const canonicalUrl = absoluteUrl(path)
-  const resolvedImage = absoluteUrl(image || DEFAULT_OG_IMAGE)
+  const rawImage = absoluteUrl(image || DEFAULT_OG_IMAGE)
+  const resolvedImage = getOptimizedImageUrl(rawImage, 1200)
   const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME
 
   return (

@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom"
 
+import OptimizedImage from "../ui/OptimizedImage.jsx"
+import { ARTICLE_COVER_SIZES } from "../../utils/cloudinaryImage.js"
+
 import {
   BRAND_COPY,
   BUSINESS_CONFERENCES_URL,
@@ -102,13 +105,13 @@ export default function ArticleTemplate({ article, contentHtml, toc, relatedArti
 
       {article.cover_image ? (
         <div className="overflow-hidden rounded-[32px] border border-ink/10 bg-white shadow-sm">
-          <img
+          <OptimizedImage
             src={article.cover_image}
             alt={article.title}
+            width={1200}
+            sizes={ARTICLE_COVER_SIZES}
+            priority
             className="h-full max-h-[620px] w-full object-cover"
-            decoding="async"
-            fetchPriority="high"
-            loading="eager"
           />
         </div>
       ) : null}

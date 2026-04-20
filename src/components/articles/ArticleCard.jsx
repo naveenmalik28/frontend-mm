@@ -1,6 +1,7 @@
 import { memo } from "react"
 import { Link } from "react-router-dom"
 
+import OptimizedImage from "../ui/OptimizedImage.jsx"
 import TagBadge from "./TagBadge.jsx"
 
 function ArticleCard({ article }) {
@@ -8,12 +9,11 @@ function ArticleCard({ article }) {
     <article className="glass-panel group relative flex h-full flex-col p-5 transition-shadow hover:shadow-card">
       {article.cover_image && (
         <div className="relative mb-5 -mx-5 -mt-5 h-48 shrink-0 overflow-hidden rounded-t-[28px]">
-          <img
+          <OptimizedImage
             src={article.cover_image}
             alt={article.title}
+            width={400}
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            decoding="async"
-            loading="lazy"
           />
           <div className="absolute inset-x-0 top-0 bg-gradient-to-b from-ink/60 to-transparent p-5">
             <span className="inline-block rounded bg-coral px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">

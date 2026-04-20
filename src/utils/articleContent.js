@@ -1,3 +1,5 @@
+import { getOptimizedImageUrl } from "./cloudinaryImage.js"
+
 const slugifyHeading = (value) =>
   String(value || "")
     .toLowerCase()
@@ -5,6 +7,26 @@ const slugifyHeading = (value) =>
     .trim()
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-")
+
+/**
+ * Optimize inline images inside article HTML content.
+ * Injects Cloudinary transforms and lazy-loading attributes.
+ */
+function optimizeInlineImages(documentNode) {
+  const images = documentNode.body.querySelectorAll("img")
+  images.forEach((img) => {
+    const src = img.getAttribute("src")
+    if (src) {
+      img.setAttribute("src", getOptimizedImageUrl(src, 800))
+    }
+    if (!img.hasAttribute("loading")) {
+      img.setAttribute("loading", "lazy")
+    }
+    if (!img.hasAttribute("decoding")) {
+      img.setAttribute("decoding", "async")
+    }
+  })
+}
 
 export function parseArticleContent(html) {
   if (!html || typeof window === "undefined") {
@@ -31,6 +53,9 @@ export function parseArticleContent(html) {
       label: rawText,
     }
   })
+
+  // Optimize all inline images in article body
+  optimizeInlineImages(documentNode)
 
   return {
     contentHtml: documentNode.body.innerHTML,
