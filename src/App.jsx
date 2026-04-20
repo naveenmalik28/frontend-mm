@@ -17,6 +17,8 @@ const About = lazy(() => import("./pages/info/About.jsx"))
 const Contact = lazy(() => import("./pages/info/Contact.jsx"))
 const PrivacyPolicy = lazy(() => import("./pages/info/PrivacyPolicy.jsx"))
 const TermsOfService = lazy(() => import("./pages/info/TermsOfService.jsx"))
+const ShippingPolicy = lazy(() => import("./pages/info/ShippingPolicy.jsx"))
+const CancellationRefundPolicy = lazy(() => import("./pages/info/CancellationRefundPolicy.jsx"))
 const Dashboard = lazy(() => import("./pages/dashboard/Dashboard.jsx"))
 const MyArticles = lazy(() => import("./pages/dashboard/MyArticles.jsx"))
 const Profile = lazy(() => import("./pages/profile/Profile.jsx"))
@@ -53,6 +55,8 @@ export default function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/terms" element={<TermsOfService />} />
+              <Route path="/shipping-policy" element={<ShippingPolicy />} />
+              <Route path="/cancellation-refund-policy" element={<CancellationRefundPolicy />} />
 
               <Route element={<PrivateRoutes />}>
                 <Route path="/dashboard" element={<Dashboard />} />

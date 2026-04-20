@@ -72,9 +72,11 @@ export default function Footer() {
 
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-ink/10 pt-8 text-xs text-ink/50 md:flex-row">
           <p>&copy; {new Date().getFullYear()} Magnivel Media. {BRAND_COPY}.</p>
-          <div className="flex gap-4">
+          <div className="flex flex-wrap gap-4">
             <Link to="/privacy" className="transition-colors hover:text-ink">Privacy Policy</Link>
             <Link to="/terms" className="transition-colors hover:text-ink">Terms of Service</Link>
+            <Link to="/shipping-policy" className="transition-colors hover:text-ink">Shipping Policy</Link>
+            <Link to="/cancellation-refund-policy" className="transition-colors hover:text-ink">Cancellation & Refund</Link>
           </div>
         </div>
       </div>
