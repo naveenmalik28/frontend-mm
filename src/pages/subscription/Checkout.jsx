@@ -145,10 +145,6 @@ export default function Checkout() {
               <span className="max-w-[180px] truncate font-semibold text-ink">{checkoutData?.order_id || "-"}</span>
             </div>
           </div>
-
-          <div className="mt-8 rounded-[24px] bg-ink px-5 py-4 text-sm leading-6 text-white/80">
-            INR is used for India. USD is used everywhere else when the plan has a USD price configured in admin.
-          </div>
         </aside>
       </div>
     </div>

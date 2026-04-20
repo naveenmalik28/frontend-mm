@@ -1,7 +1,7 @@
 import { memo } from "react"
 import { Link } from "react-router-dom"
 
-import { formatCurrencyAmount } from "../../utils/subscriptionPricing.js"
+import { detectPreferredCurrency, getDisplayCurrency, formatPlanPrice } from "../../utils/subscriptionPricing.js"
 import Button from "../ui/Button.jsx"
 
 function PlanCard({ plan }) {
@@ -33,18 +33,16 @@ function PlanCard({ plan }) {
         </div>
 
         <div className="relative mt-8 rounded-[26px] border border-white/60 bg-white/70 p-5 backdrop-blur backdrop-saturate-150">
-          <div className="text-[10px] font-bold uppercase tracking-[0.28em] text-ink/40">Dual Pricing</div>
+          <div className="text-[10px] font-bold uppercase tracking-[0.28em] text-ink/40">Plan Price</div>
           <div className="mt-4 flex flex-col gap-3">
             <div className="flex items-end gap-2">
-              <p className="font-display text-4xl leading-none text-ink">{formatCurrencyAmount(plan.price, "INR")}</p>
-              <span className="pb-1 text-xs font-bold uppercase tracking-wider text-ink/40">INR</span>
+              <p className="font-display text-4xl leading-none text-ink">
+                {formatPlanPrice(plan, detectPreferredCurrency())}
+              </p>
+              <span className="pb-1 text-xs font-bold uppercase tracking-wider text-ink/40">
+                {getDisplayCurrency(plan, detectPreferredCurrency())}
+              </span>
             </div>
-            {Number(plan.price_usd || 0) > 0 && (
-              <div className="flex items-end gap-2 opacity-80">
-                <p className="font-display text-2xl leading-none text-ink">{formatCurrencyAmount(plan.price_usd, "USD")}</p>
-                <span className="pb-0.5 text-xs font-bold uppercase tracking-wider text-ink/40">USD</span>
-              </div>
-            )}
           </div>
         </div>
 
