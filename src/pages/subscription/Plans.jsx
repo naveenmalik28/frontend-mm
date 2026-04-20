@@ -167,17 +167,12 @@ export default function Plans() {
 
           <div className="bg-white rounded-2xl p-6">
             <h3 className="font-bold text-lg text-ink mb-2">What payment methods do you accept?</h3>
-            <p className="text-ink/70">We accept all major credit cards and digital payment methods. Your payment is secure and processed through Stripe.</p>
+            <p className="text-ink/70">We accept all major credit cards and digital payment methods. Your payment is secure and processed through Razorpay.</p>
           </div>
 
           <div className="bg-white rounded-2xl p-6">
             <h3 className="font-bold text-lg text-ink mb-2">Do I own my articles?</h3>
             <p className="text-ink/70">Absolutely! You retain full ownership of all your content. You can edit, delete, or export your articles anytime.</p>
-          </div>
-
-          <div className="bg-white rounded-2xl p-6">
-            <h3 className="font-bold text-lg text-ink mb-2">Is there a free trial?</h3>
-            <p className="text-ink/70">We offer a 7-day free trial on any plan. No credit card required to start.</p>
           </div>
 
           <div className="bg-white rounded-2xl p-6">

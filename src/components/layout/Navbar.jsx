@@ -39,7 +39,6 @@ export default function Navbar() {
         <nav className="hidden items-center gap-6 text-sm font-medium lg:flex">
           <NavLink to="/" className="hover:text-coral">Home</NavLink>
           <NavLink to="/explore" className="hover:text-coral">Explore</NavLink>
-          <a href={BUSINESS_URL} target="_blank" rel="noreferrer" className="hover:text-coral">Magnivel International</a>
           <NavLink to="/plans" className="hover:text-coral">Plans</NavLink>
           {user ? <NavLink to="/dashboard" className="hover:text-coral">Dashboard</NavLink> : null}
         </nav>
