@@ -13,8 +13,7 @@ function ArticleCard({ article }) {
             src={article.cover_image}
             alt={article.title}
             width={400}
-            aspectRatio="16:9"
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="h-full w-full object-contain bg-slate-50 transition-transform duration-500 group-hover:scale-105"
           />
           <div className="absolute inset-x-0 top-0 bg-gradient-to-b from-ink/60 to-transparent p-5">
             <span className="inline-block rounded bg-coral px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">

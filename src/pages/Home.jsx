@@ -171,7 +171,7 @@ export default function Home() {
                     width={1200}
                     sizes={HERO_IMAGE_SIZES}
                     priority
-                    className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                    className="h-full w-full object-contain transition duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/40 to-transparent"></div>
                 </div>
