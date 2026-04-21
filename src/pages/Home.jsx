@@ -21,7 +21,7 @@ import { HERO_IMAGE_SIZES } from "../utils/cloudinaryImage.js"
 // Icons
 const SparklesIcon = () => (
   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
   </svg>
 )
 
@@ -87,8 +87,8 @@ export default function Home() {
   return (
     <div className="space-y-16">
       <SeoHead
-        title="AI, Technology, Science, and Business Insights"
-        description="Magnivel Media publishes search-first analysis on AI, technology, software development, cybersecurity, data science, health, science, education, society, and business. Powered by Magnivel International."
+        title="Magnivel Media - Read, Write and Share Your Ideas"
+        description="Magnivel Media is a platform where users can read and publish articles and blogs across technology, AI, business, and innovation."
         path="/"
         schema={{
           "@context": "https://schema.org",
@@ -103,22 +103,22 @@ export default function Home() {
       <section className="relative overflow-hidden rounded-[32px] border border-white/40 bg-gradient-to-br from-slate-50 via-white to-slate-50/50 p-8 sm:p-12 shadow-lg shadow-ink/5">
         <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-coral/10 blur-3xl"></div>
         <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-teal/10 blur-3xl"></div>
-        
+
         <div className="relative z-10">
           <div className="inline-flex items-center gap-2 rounded-full bg-coral/10 px-4 py-2 mb-6 border border-coral/20">
             <SparklesIcon className="text-coral" />
             <span className="text-sm font-semibold text-coral uppercase tracking-wider">Welcome to Magnivel Media</span>
           </div>
-          
+
           <h1 className="font-display text-4xl sm:text-5xl font-bold text-ink leading-tight mb-4">
             Ideas That <span className="text-transparent bg-clip-text bg-gradient-to-r from-coral to-teal">Shape Tomorrow</span>
           </h1>
-          
+
           <p className="text-lg text-ink/70 leading-relaxed max-w-3xl mb-8">
-            A publishing platform for high-quality analysis on <strong>AI, technology, business, science, and innovation</strong>. 
+            A publishing platform for high-quality analysis on <strong>AI, technology, business, science, and innovation</strong>.
             Powered by <strong>{BUSINESS_NAME}</strong> — where independent thinkers publish insights that matter.
           </p>
-          
+
           {/* Quick Facts */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="flex items-start gap-3 bg-white/50 rounded-xl p-4 backdrop-blur-sm border border-white">
@@ -130,7 +130,7 @@ export default function Home() {
                 <p className="text-xs text-ink/60">Share your ideas with a global audience</p>
               </div>
             </div>
-            
+
             <div className="flex items-start gap-3 bg-white/50 rounded-xl p-4 backdrop-blur-sm border border-white">
               <div className="p-2 rounded-lg bg-teal/10 text-teal shrink-0">
                 <UsersIcon />
@@ -140,7 +140,7 @@ export default function Home() {
                 <p className="text-xs text-ink/60">Join a community of innovators & thinkers</p>
               </div>
             </div>
-            
+
             <div className="flex items-start gap-3 bg-white/50 rounded-xl p-4 backdrop-blur-sm border border-white">
               <div className="p-2 rounded-lg bg-blue-100 text-blue-600 shrink-0">
                 <TrendingIcon />
@@ -299,7 +299,7 @@ export default function Home() {
             Publish Your Ideas. Build Your Authority.
           </h2>
           <p className="mx-auto mb-8 max-w-2xl text-lg font-light leading-relaxed text-white/80">
-            {SITE_NAME} is the publishing layer for <strong>thought leadership in AI, technology, business, and innovation</strong>. 
+            {SITE_NAME} is the publishing layer for <strong>thought leadership in AI, technology, business, and innovation</strong>.
             Share your expertise with thousands of readers globally.
           </p>
 
