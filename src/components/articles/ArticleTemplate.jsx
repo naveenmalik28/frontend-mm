@@ -110,6 +110,7 @@ export default function ArticleTemplate({ article, contentHtml, toc, relatedArti
             alt={article.title}
             width={1200}
             sizes={ARTICLE_COVER_SIZES}
+            aspectRatio="3:2"
             priority
             className="h-full max-h-[620px] w-full object-cover"
           />

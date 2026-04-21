@@ -5,9 +5,10 @@
  * image sizes from ~2 MB originals down to ~30–100 KB responsive versions.
  *
  * Supports:
- *  - Automatic format negotiation  (f_auto → WebP / AVIF)
+ *  - Automatic format negotiation  (f_auto)
  *  - Quality compression            (q_auto)
  *  - Width-based resizing            (w_<n>)
+ *  - Aspect ratio cropping           (ar_<x:y>, c_fill, g_auto)
  *  - Responsive srcSet generation    (400w / 800w / 1200w)
  */
 
@@ -19,12 +20,13 @@ export const IMG_WIDTHS = [400, 800, 1200]
 /**
  * Inject Cloudinary transformation params into a URL.
  *
- * @param {string} url        – Original Cloudinary URL (or any URL)
- * @param {number} [width]    – Desired width in px (omit for original)
- * @param {string} [quality]  – Cloudinary quality preset (default "auto")
- * @returns {string}          – Transformed URL (passthrough for non-Cloudinary)
+ * @param {string} url          – Original Cloudinary URL (or any URL)
+ * @param {number} [width]      – Desired width in px (omit for original)
+ * @param {string} [quality]    – Cloudinary quality preset (default "auto")
+ * @param {string} [aspectRatio] – Desired aspect ratio (e.g., "16:9", "3:2")
+ * @returns {string}            – Transformed URL (passthrough for non-Cloudinary)
  */
-export function getOptimizedImageUrl(url, width, quality = "auto") {
+export function getOptimizedImageUrl(url, width, quality = "auto", aspectRatio = undefined) {
   if (!url || typeof url !== "string") return url || ""
 
   // Don't touch blob / data / non-Cloudinary URLs
@@ -32,6 +34,7 @@ export function getOptimizedImageUrl(url, width, quality = "auto") {
 
   const transforms = [`f_auto`, `q_${quality}`]
   if (width) transforms.push(`w_${width}`)
+  if (aspectRatio) transforms.push(`c_fill,g_auto,ar_${aspectRatio}`)
 
   const transformString = transforms.join(",")
 
@@ -45,14 +48,16 @@ export function getOptimizedImageUrl(url, width, quality = "auto") {
 /**
  * Build a `srcSet` string for responsive images.
  *
- * @param {string} url      – Original Cloudinary URL
- * @param {number[]} widths – Array of widths (default IMG_WIDTHS)
- * @returns {string}        – Ready-to-use srcSet value
+ * @param {string} url          – Original Cloudinary URL
+ * @param {number[]} widths     – Array of widths (default IMG_WIDTHS)
+ * @param {string} [quality]    – Desired quality preset
+ * @param {string} [aspectRatio] – Aspect ratio to crop to
+ * @returns {string}            – Ready-to-use srcSet value
  */
-export function getImageSrcSet(url, widths = IMG_WIDTHS) {
+export function getImageSrcSet(url, widths = IMG_WIDTHS, quality = "auto", aspectRatio = undefined) {
   if (!url || !CLOUDINARY_UPLOAD_RE.test(url)) return undefined
 
-  return widths.map((w) => `${getOptimizedImageUrl(url, w)} ${w}w`).join(", ")
+  return widths.map((w) => `${getOptimizedImageUrl(url, w, quality, aspectRatio)} ${w}w`).join(", ")
 }
 
 /**

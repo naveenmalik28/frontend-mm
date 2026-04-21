@@ -21,6 +21,7 @@ import {
  * @param {string}  [props.className]   – CSS classes
  * @param {number}  [props.width]       – Fallback src width (default 800)
  * @param {string}  [props.sizes]       – Responsive sizes attribute
+ * @param {string}  [props.aspectRatio] – Aspect ratio (e.g. "16:9", "3:2")
  * @param {boolean} [props.priority]    – True for above-the-fold / LCP images
  * @param {function} [props.onError]    – Error handler
  */
@@ -30,12 +31,13 @@ function OptimizedImage({
   className = "",
   width = 800,
   sizes = CARD_IMAGE_SIZES,
+  aspectRatio,
   priority = false,
   onError,
   ...rest
 }) {
-  const optimizedSrc = getOptimizedImageUrl(src, width)
-  const srcSet = getImageSrcSet(src)
+  const optimizedSrc = getOptimizedImageUrl(src, width, "auto:eco", aspectRatio)
+  const srcSet = getImageSrcSet(src, undefined, "auto:eco", aspectRatio)
 
   return (
     <img
