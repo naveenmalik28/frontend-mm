@@ -72,9 +72,8 @@ export default function Footer() {
 
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-ink/10 pt-8 text-xs text-ink/50 md:flex-row">
           <div className="flex flex-col gap-1 items-center md:items-start">
-            <p>&copy; {new Date().getFullYear()} Magnivel Media. {BRAND_COPY}.</p>
-            <p className="font-semibold text-ink/60">MAGNIVEL INTERNATIONAL PRIVATE LIMITED</p>
-            <a href="mailto:finance@magnivelinternational.com" className="hover:text-ink">finance@magnivelinternational.com</a>
+            <p>&copy; {new Date().getFullYear()} Magnivel Media. {BRAND_COPY}. All rights reserved.</p>
+            <p className="font-semibold text-ink/60">A PRODUCT OF MAGNIVEL INTERNATIONAL PRIVATE LIMITED</p>
           </div>
           <div className="flex flex-col items-center md:items-end gap-2">
             <div className="flex flex-wrap justify-center gap-4">
