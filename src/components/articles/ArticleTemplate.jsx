@@ -104,14 +104,15 @@ export default function ArticleTemplate({ article, contentHtml, toc, relatedArti
       </header>
 
       {article.cover_image ? (
-        <div className="overflow-hidden rounded-[32px] border border-ink/10 bg-white shadow-sm">
+        <div className="aspect-video w-full overflow-hidden rounded-[32px] border border-ink/10 bg-white shadow-sm">
           <OptimizedImage
             src={article.cover_image}
             alt={article.title}
             width={1200}
             sizes={ARTICLE_COVER_SIZES}
+            aspectRatio="16:9"
             priority
-            className="h-full max-h-[620px] w-full object-contain bg-slate-50"
+            className="h-full w-full object-cover"
           />
         </div>
       ) : null}

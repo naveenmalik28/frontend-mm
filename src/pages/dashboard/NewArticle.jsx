@@ -255,7 +255,7 @@ export default function NewArticle() {
                     <img
                       src={form.cover_image}
                       alt="Preview"
-                      className="max-h-48 w-full object-contain bg-slate-50"
+                      className="max-h-56 w-full object-cover"
                       onError={(e) => (e.target.style.display = "none")}
                     />
                     <button
