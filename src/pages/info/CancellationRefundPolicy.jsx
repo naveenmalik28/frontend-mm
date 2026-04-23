@@ -38,7 +38,7 @@ export default function CancellationRefundPolicy() {
         <div className="glass-panel p-8 sm:p-12 md:p-16 shadow-xl shadow-ink/5 border border-white">
           <div className="prose prose-slate prose-lg max-w-none text-ink/80 prose-headings:font-display prose-headings:text-ink prose-a:text-coral hover:prose-a:text-coral/80 prose-li:marker:text-coral">
             <p className="lead text-xl text-ink/90 font-medium mb-8">
-              At <strong>Magnivel International Media</strong>, we strive to ensure that every user has a transparent and fair experience. This Cancellation & Refund Policy outlines your rights and the procedures for cancelling subscriptions and requesting refunds.
+              At <strong>Magnivel International Media</strong>, we strive to ensure that every user has a transparent and fair experience. The website <strong>magnivel.com</strong> is owned and operated by <strong>Magnivel International</strong> (<a href="https://magnivelinternational.com" target="_blank" rel="noopener noreferrer">magnivelinternational.com</a>). This Cancellation & Refund Policy outlines your rights and the procedures for cancelling subscriptions and requesting refunds.
             </p>
 
             <h2 className="text-2xl mt-10 mb-4 border-b border-slate-200 pb-2">1. Subscription Cancellation</h2>
@@ -77,7 +77,7 @@ export default function CancellationRefundPolicy() {
               To initiate a refund request, please follow these steps:
             </p>
             <ol className="space-y-2">
-              <li>Send an email to <a href="mailto:billing@magnivel.com" className="font-bold">billing@magnivel.com</a> with the subject line: <strong>"Refund Request – [Your Account Email]"</strong></li>
+              <li>Send an email to <a href="mailto:contact@magnivel.com" className="font-bold">contact@magnivel.com</a> with the subject line: <strong>"Refund Request – [Your Account Email]"</strong></li>
               <li>Include your full name, registered email address, subscription plan details, and the reason for your refund request.</li>
               <li>Our billing support team will review your request and respond within <strong>3–5 business days</strong>.</li>
               <li>If approved, the refund will be processed to your original payment method within <strong>7–10 business days</strong>, depending on your bank or payment provider.</li>
@@ -101,7 +101,7 @@ export default function CancellationRefundPolicy() {
             <div className="mt-12 bg-slate-50 p-6 rounded-2xl border border-slate-200">
               <h2 className="text-xl m-0 mb-2 font-display text-ink">8. Need Help?</h2>
               <p className="m-0">
-                For any questions regarding cancellations, refunds, or billing, please reach out to our support team at <a href="mailto:billing@magnivel.com" className="font-bold">billing@magnivel.com</a> or visit our <Link to="/contact" className="font-bold">Contact Us</Link> page. We're here to help.
+                For any questions regarding cancellations, refunds, or billing, please reach out to our support team at <a href="mailto:contact@magnivel.com" className="font-bold">contact@magnivel.com</a> or visit our <Link to="/contact" className="font-bold">Contact Us</Link> page. We're here to help.
               </p>
             </div>
           </div>

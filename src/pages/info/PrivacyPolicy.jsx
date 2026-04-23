@@ -35,7 +35,7 @@ export default function PrivacyPolicy() {
         <div className="glass-panel p-8 sm:p-12 md:p-16 shadow-xl shadow-ink/5 border border-white">
           <div className="prose prose-slate prose-lg max-w-none text-ink/80 prose-headings:font-display prose-headings:text-ink prose-a:text-coral hover:prose-a:text-coral/80 prose-li:marker:text-coral">
             <p className="lead text-xl text-ink/90 font-medium mb-8">
-              At <strong>Magnivel International Media</strong>, we are committed to protecting your privacy and ensuring you have a positive experience on our website. This Privacy Policy outlines how we handle your personal data when you visit our platform, read articles, or publish content.
+              At <strong>Magnivel International Media</strong>, we are committed to protecting your privacy and ensuring you have a positive experience on our website. The website <strong>magnivel.com</strong> is owned and operated by <strong>Magnivel International</strong> (<a href="https://magnivelinternational.com" target="_blank" rel="noopener noreferrer">magnivelinternational.com</a>). This Privacy Policy outlines how we handle your personal data when you visit our platform, read articles, or publish content.
             </p>
 
             <h2 className="text-2xl mt-10 mb-4 border-b border-slate-200 pb-2">1. Information We Collect</h2>
@@ -80,7 +80,7 @@ export default function PrivacyPolicy() {
             <div className="mt-12 bg-slate-50 p-6 rounded-2xl border border-slate-200">
               <h2 className="text-xl m-0 mb-2 font-display text-ink">7. Contact Us</h2>
               <p className="m-0">
-                If you have any questions or concerns about this Privacy Policy or our data practices, please contact us at <a href="mailto:privacy@magnivel.com" className="font-bold">privacy@magnivel.com</a>.
+                If you have any questions or concerns about this Privacy Policy or our data practices, please contact us at <a href="mailto:contact@magnivel.com" className="font-bold">contact@magnivel.com</a>.
               </p>
             </div>
           </div>

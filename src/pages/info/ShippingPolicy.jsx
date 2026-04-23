@@ -39,7 +39,7 @@ export default function ShippingPolicy() {
         <div className="glass-panel p-8 sm:p-12 md:p-16 shadow-xl shadow-ink/5 border border-white">
           <div className="prose prose-slate prose-lg max-w-none text-ink/80 prose-headings:font-display prose-headings:text-ink prose-a:text-coral hover:prose-a:text-coral/80 prose-li:marker:text-coral">
             <p className="lead text-xl text-ink/90 font-medium mb-8">
-              <strong>Magnivel International Media</strong> is a digital-only platform. All products, services, and content offered through our website are delivered electronically. There are no physical goods shipped as part of our standard offerings.
+              <strong>Magnivel International Media</strong> is a digital-only platform. The website <strong>magnivel.com</strong> is owned and operated by <strong>Magnivel International</strong> (<a href="https://magnivelinternational.com" target="_blank" rel="noopener noreferrer">magnivelinternational.com</a>). All products, services, and content offered through our website are delivered electronically. There are no physical goods shipped as part of our standard offerings.
             </p>
 
             <h2 className="text-2xl mt-10 mb-4 border-b border-slate-200 pb-2">1. Digital Delivery</h2>
@@ -84,7 +84,7 @@ export default function ShippingPolicy() {
             <div className="mt-12 bg-slate-50 p-6 rounded-2xl border border-slate-200">
               <h2 className="text-xl m-0 mb-2 font-display text-ink">6. Questions?</h2>
               <p className="m-0">
-                If you have any questions about our shipping (digital delivery) policy, feel free to reach out to us at <a href="mailto:support@magnivel.com" className="font-bold">support@magnivel.com</a> or visit our <Link to="/contact" className="font-bold">Contact Us</Link> page.
+                If you have any questions about our shipping (digital delivery) policy, feel free to reach out to us at <a href="mailto:contact@magnivel.com" className="font-bold">contact@magnivel.com</a> or visit our <Link to="/contact" className="font-bold">Contact Us</Link> page.
               </p>
             </div>
           </div>
