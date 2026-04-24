@@ -6,8 +6,13 @@ export const registerUser = async (payload) => {
 }
 
 export const loginUser = async (payload) => {
-  const { data } = await api.post("/auth/login/", payload)
-  return data
+  try {
+    const { data } = await api.post("/auth/login/", payload)
+    return data
+  } catch (error) {
+    console.error("Login failed:", error.response?.data || error.message)
+    throw error
+  }
 }
 
 export const fetchCurrentUser = async () => {
@@ -26,6 +31,9 @@ export const changePassword = async (payload) => {
 }
 
 export const logoutUser = async (refreshToken) => {
-  await api.post("/auth/logout/", { refresh: refreshToken })
+  try {
+    await api.post("/auth/logout/", { refresh: refreshToken })
+  } catch (error) {
+    console.warn("Logout failed, forcing local logout:", error.response?.data || error.message)
+  }
 }
-

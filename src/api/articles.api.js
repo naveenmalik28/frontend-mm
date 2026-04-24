@@ -1,12 +1,17 @@
 import api from "./axios.js"
 import { cachedRequest, invalidateCacheNamespace } from "../utils/requestCache.js"
 
-const unwrapList = (response) => response.data?.results ?? response.data
+const unwrapList = (response) => response?.data?.results ?? response?.data ?? []
 const isFile = (value) => typeof File !== "undefined" && value instanceof File
 const isPreviewUrl = (value) => typeof value === "string" && value.startsWith("blob:")
 const ARTICLE_LIST_TTL = 60_000
 const ARTICLE_DETAIL_TTL = 60_000
 const TAXONOMY_TTL = 5 * 60_000
+
+const invalidateArticleCaches = () => {
+  invalidateCacheNamespace("articles")
+  invalidateCacheNamespace("article-detail")
+}
 
 const toArticleRequestBody = (payload = {}) => {
   if (!isFile(payload.cover_image_file)) {
@@ -83,24 +88,26 @@ export const fetchMyStats = async () => {
 export const createArticle = async (payload) => {
   const body = toArticleRequestBody(payload)
   const { data } = await api.post("/articles/", body, requestConfig(body))
-  invalidateCacheNamespace("articles")
-  invalidateCacheNamespace("article-detail")
+  invalidateArticleCaches()
   return data
 }
 
 export const updateArticle = async (id, payload) => {
   const body = toArticleRequestBody(payload)
   const { data } = await api.patch(`/articles/${id}/`, body, requestConfig(body))
-  invalidateCacheNamespace("articles")
-  invalidateCacheNamespace("article-detail")
+  invalidateArticleCaches()
   return data
 }
 
 export const publishArticle = async (id) => {
-  const { data } = await api.post(`/articles/${id}/publish/`)
-  invalidateCacheNamespace("articles")
-  invalidateCacheNamespace("article-detail")
-  return data
+  try {
+    const { data } = await api.post(`/articles/${id}/publish/`)
+    invalidateArticleCaches()
+    return data
+  } catch (error) {
+    console.error("Publish failed:", error.response?.data || error.message)
+    throw error
+  }
 }
 
 export const incrementArticleView = async (id) => {

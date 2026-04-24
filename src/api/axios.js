@@ -15,12 +15,17 @@ const api = axios.create({
 let isRefreshing = false
 let refreshSubscribers = []
 
-const subscribeTokenRefresh = (callback) => {
-  refreshSubscribers.push(callback)
+const subscribeTokenRefresh = (resolve, reject) => {
+  refreshSubscribers.push({ resolve, reject })
 }
 
 const onRefreshed = (newToken) => {
-  refreshSubscribers.forEach((cb) => cb(newToken))
+  refreshSubscribers.forEach(({ resolve }) => resolve(newToken))
+  refreshSubscribers = []
+}
+
+const onRefreshFailed = (refreshError) => {
+  refreshSubscribers.forEach(({ reject }) => reject(refreshError))
   refreshSubscribers = []
 }
 
@@ -42,25 +47,30 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config
+    const { refreshToken, user, login, logout } = useAuthStore.getState()
+
+    if (!originalRequest || originalRequest.url?.includes("/auth/token/refresh/")) {
+      return Promise.reject(error)
+    }
 
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
-
-      const { refreshToken, user, login, logout } =
-        useAuthStore.getState()
 
       if (!refreshToken) {
         logout()
         return Promise.reject(error)
       }
 
-      // If already refreshing → queue requests
       if (isRefreshing) {
-        return new Promise((resolve) => {
-          subscribeTokenRefresh((token) => {
-            originalRequest.headers.Authorization = `Bearer ${token}`
-            resolve(api(originalRequest))
-          })
+        return new Promise((resolve, reject) => {
+          subscribeTokenRefresh(
+            (token) => {
+              originalRequest.headers = originalRequest.headers || {}
+              originalRequest.headers.Authorization = `Bearer ${token}`
+              resolve(api(originalRequest))
+            },
+            (refreshError) => reject(refreshError),
+          )
         })
       }
 
@@ -69,30 +79,29 @@ api.interceptors.response.use(
       try {
         const response = await axios.post(
           `${baseURL}/api/auth/token/refresh/`,
-          { refresh: refreshToken }
+          { refresh: refreshToken },
         )
 
         const newAccessToken = response.data.access
 
         login(user, newAccessToken, refreshToken)
-
         onRefreshed(newAccessToken)
-        isRefreshing = false
 
+        originalRequest.headers = originalRequest.headers || {}
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
 
         return api(originalRequest)
       } catch (refreshError) {
-        isRefreshing = false
+        onRefreshFailed(refreshError)
         logout()
-
-        // Let UI handle redirect
         return Promise.reject(refreshError)
+      } finally {
+        isRefreshing = false
       }
     }
 
     return Promise.reject(error)
-  }
+  },
 )
 
 export default api
