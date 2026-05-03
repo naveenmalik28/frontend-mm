@@ -9,6 +9,7 @@ const baseURL =
 
 const api = axios.create({
   baseURL: `${baseURL}/api`,
+  timeout: 30_000,
 })
 
 // Refresh control
@@ -80,11 +81,13 @@ api.interceptors.response.use(
         const response = await axios.post(
           `${baseURL}/api/auth/token/refresh/`,
           { refresh: refreshToken },
+          { timeout: 30_000 },
         )
 
         const newAccessToken = response.data.access
+        const newRefreshToken = response.data.refresh ?? refreshToken
 
-        login(user, newAccessToken, refreshToken)
+        login(user, newAccessToken, newRefreshToken)
         onRefreshed(newAccessToken)
 
         originalRequest.headers = originalRequest.headers || {}
