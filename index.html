@@ -3,9 +3,8 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#132238" />
-
 
   <!-- Favicons -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -16,13 +15,42 @@
   <!-- Android & PWA -->
   <link rel="manifest" href="/site.webmanifest" />
 
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://magnivel.com/" />
+
   <!-- Preconnect to external APIs -->
   <link rel="preconnect" href="https://api.magnivel.com" />
   <link rel="preconnect" href="https://magnivelinternational.com" />
   <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
 
-  <title>Magnivel Media - Read, Write and Share Your Ideas</title>
+  <!-- DNS Prefetch (performance) -->
+  <link rel="dns-prefetch" href="//res.cloudinary.com">
+  <link rel="dns-prefetch" href="//api.magnivel.com">
 
+  <!-- Primary SEO -->
+  <title>Magnivel Media | Publish & Read Blogs on AI, Tech & Business</title>
+  <meta name="description"
+    content="Discover high-quality articles on AI, technology, business, and innovation. Publish your ideas and grow your audience on Magnivel Media.">
+  <meta name="keywords"
+    content="Magnivel, Media, Read, Write, Share, Ideas, Technology, AI Conference, Business, Innovation">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Magnivel Media">
+  <meta name="language" content="English">
+
+  <!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
+  <meta property="og:title" content="Magnivel Media - Read, Write and Share Your Ideas" />
+  <meta property="og:description" content="Read and publish articles on technology, AI, business, and innovation." />
+  <meta property="og:image" content="https://magnivel.com/og-image.jpg" />
+  <meta property="og:url" content="https://magnivel.com" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Magnivel Media" />
+  <meta name="twitter:description" content="Read and publish blogs on tech, AI, and business." />
+  <meta name="twitter:image" content="https://magnivel.com/og-image.jpg" />
+
+  <!-- Structured Data: BreadcrumbList -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -41,6 +69,21 @@
           "url": "https://magnivel.com/"
         }
       }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Magnivel Media",
+    "url": "https://magnivel.com",
+    "logo": "https://magnivel.com/logo.png",
+    "sameAs": [
+      "https://www.linkedin.com/company/magnivel",
+      "https://twitter.com/magnivel"
     ]
   }
   </script>
