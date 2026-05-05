@@ -186,11 +186,11 @@ export default function Home() {
                   {featuredArticle.category?.name || "Featured Insight"}
                 </div>
                 <div className="text-xs font-bold uppercase tracking-[0.28em] text-coral">{BRAND_COPY}</div>
-                <h1 className="mt-4 font-display text-4xl leading-tight sm:text-5xl">
+                <h2 className="mt-4 font-display text-4xl leading-tight sm:text-5xl">
                   <Link to={`/article/${featuredArticle.slug}`} className="transition-colors hover:text-coral/90">
                     {featuredArticle.title}
                   </Link>
-                </h1>
+                </h2>
                 <p className="mt-4 max-w-2xl text-lg text-white/80 line-clamp-3">{featuredArticle.excerpt}</p>
                 <div className="mt-6 flex items-center gap-4 text-sm font-medium text-white/70">
                   <span>{featuredArticle.author?.full_name || featuredArticle.author?.username || "Magnivel Media"}</span>
@@ -240,6 +240,15 @@ export default function Home() {
             ) : null}
           </div>
         </div>
+      </section>
+
+      <section className="glass-panel p-8 sm:p-10">
+        <h2 className="font-display text-3xl font-bold text-ink">Why readers and writers choose Magnivel Media</h2>
+        <p className="mt-4 text-ink/75 leading-relaxed">
+          Magnivel Media helps creators and professionals read and publish <strong>AI articles</strong>, <strong>technology analysis</strong>,
+          <strong> startup insights</strong>, and <strong>innovation trends</strong>. Whether you are a founder, engineer, analyst, or marketer,
+          the platform is built for discoverability, authority building, and long-term audience growth through high-quality editorial content.
+        </p>
       </section>
 
       {/* How It Works Section */}

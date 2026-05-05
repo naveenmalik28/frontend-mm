@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 
 import Footer from "./components/layout/Footer.jsx"
 import Navbar from "./components/layout/Navbar.jsx"
+import RouteSeo from "./components/seo/RouteSeo.jsx"
 import Spinner from "./components/ui/Spinner.jsx"
 import PrivateRoutes from "./routes/PrivateRoutes.jsx"
 import SubscriberRoutes from "./routes/SubscriberRoutes.jsx"
@@ -41,6 +42,7 @@ export default function App() {
     <BrowserRouter>
       <div className="min-h-screen bg-sand text-ink">
         <Navbar />
+        <RouteSeo />
         <main className="mx-auto min-h-[calc(100vh-168px)] max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <Suspense fallback={<RouteFallback />}>
             <Routes>

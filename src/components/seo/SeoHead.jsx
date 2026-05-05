@@ -17,6 +17,7 @@ export default function SeoHead({
   type = "website",
   schema,
   keywords,
+  noIndex = false,
 }) {
   const canonicalUrl = absoluteUrl(path)
   const rawImage = absoluteUrl(image || DEFAULT_OG_IMAGE)
@@ -29,6 +30,7 @@ export default function SeoHead({
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       {keywords ? <meta name="keywords" content={keywords} /> : null}
+      {noIndex ? <meta name="robots" content="noindex, nofollow" /> : <meta name="robots" content="index, follow" />}
       <link rel="canonical" href={canonicalUrl} />
       <meta property="og:site_name" content={SITE_NAME} />
       <meta property="og:title" content={fullTitle} />
@@ -36,6 +38,7 @@ export default function SeoHead({
       <meta property="og:type" content={type} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:image" content={resolvedImage} />
+      <meta property="og:locale" content="en_US" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
