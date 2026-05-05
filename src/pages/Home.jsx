@@ -13,7 +13,6 @@ import {
   BUSINESS_URL,
   CATEGORY_LABELS,
   SITE_NAME,
-  SITE_TAGLINE,
 } from "../config/site.js"
 import { useArticles } from "../hooks/useArticles.js"
 import { HERO_IMAGE_SIZES } from "../utils/cloudinaryImage.js"
@@ -87,15 +86,21 @@ export default function Home() {
   return (
     <div className="space-y-16">
       <SeoHead
-        title="Magnivel Media - Read, Write and Share Your Ideas"
-        description="Magnivel Media is a platform where users can read and publish articles and blogs across technology, AI, business, and innovation."
+        title="Magnivel Media | Read, Write & Share Articles on AI, Tech & Innovation"
+        description="Magnivel Media is a modern platform to read, write, and share ideas on technology, AI, startups, and innovation. Discover insights, publish articles, and grow your audience."
         path="/"
         schema={{
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: SITE_NAME,
           url: "https://magnivel.com/",
-          description: SITE_TAGLINE,
+          description:
+            "Magnivel Media is a modern platform to read, write, and share ideas on technology, AI, startups, and innovation. Discover insights, publish articles, and grow your audience.",
+          potentialAction: {
+            "@type": "SearchAction",
+            target: "https://magnivel.com/explore?q={search_term_string}",
+            "query-input": "required name=search_term_string",
+          },
         }}
       />
 

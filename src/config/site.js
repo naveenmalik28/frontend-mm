@@ -6,7 +6,7 @@ export const BUSINESS_URL = "https://magnivelinternational.com"
 export const BUSINESS_SERVICES_URL = `${BUSINESS_URL}/services`
 export const BUSINESS_CONFERENCES_URL = `${BUSINESS_URL}/conferences`
 export const BUSINESS_CONTACT_URL = `${BUSINESS_URL}/contact-us`
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/hero-share.svg`
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/preview.png`
 export const BRAND_COPY = "Powered by Magnivel International"
 
 export const CATEGORY_ORDER = [

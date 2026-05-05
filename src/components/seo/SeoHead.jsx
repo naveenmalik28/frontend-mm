@@ -21,7 +21,7 @@ export default function SeoHead({
   const canonicalUrl = absoluteUrl(path)
   const rawImage = absoluteUrl(image || DEFAULT_OG_IMAGE)
   const resolvedImage = getOptimizedImageUrl(rawImage, 1200)
-  const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME
+  const fullTitle = title ? (title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`) : SITE_NAME
 
   return (
     <Helmet prioritizeSeoTags>
