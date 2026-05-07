@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react"
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom"
+import { Link, NavLink, useNavigate } from "react-router-dom"
 
 import { logoutUser } from "../../api/auth.api.js"
 import {
@@ -19,14 +18,6 @@ export default function Navbar() {
   const logout = useAuthStore((state) => state.logout)
   const clearSubscription = useSubscriptionStore((state) => state.clearSubscription)
   const navigate = useNavigate()
-  const location = useLocation()
-  const [searchInput, setSearchInput] = useState("")
-
-  useEffect(() => {
-    const params = new URLSearchParams(location.search)
-    setSearchInput(params.get("q") || "")
-  }, [location.search])
-
   const handleLogout = async () => {
     try {
       if (refreshToken) await logoutUser(refreshToken)
@@ -37,16 +28,6 @@ export default function Navbar() {
       clearSubscription()
       navigate("/")
     }
-  }
-
-  const handleSearchSubmit = (event) => {
-    event.preventDefault()
-    const query = searchInput.trim()
-    if (!query) {
-      navigate("/explore")
-      return
-    }
-    navigate(`/explore?q=${encodeURIComponent(query)}`)
   }
 
   return (
@@ -61,19 +42,6 @@ export default function Navbar() {
           {user ? <NavLink to="/dashboard" className="hover:text-coral">Dashboard</NavLink> : null}
         </nav>
 
-        <form onSubmit={handleSearchSubmit} className="hidden min-w-[240px] flex-1 lg:block">
-          <label htmlFor="global-search" className="sr-only">
-            Search articles
-          </label>
-          <input
-            id="global-search"
-            type="search"
-            value={searchInput}
-            onChange={(event) => setSearchInput(event.target.value)}
-            className="input !rounded-full !py-2"
-            placeholder="Search articles..."
-          />
-        </form>
 
         <div className="flex items-center gap-3">
           {user ? (
